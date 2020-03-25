@@ -27,12 +27,26 @@ for i in range(n_timevars):
 df["mean_time"] = df["elapsed_time"]/df["n_exec"]
 
 
+def positive_part(x):
+    return np.array([max(i, 0.) for i in x])
+
+def negative_part(x):
+    return np.array([max(-i, 0.) for i in x])
+
+
 def f(x):
     m, n = x
 
     residual = m*df["time_var_0"]+n-df["mean_time"]
 
-    return residual.to_list()
+    pos = positive_part(residual)
+    neg = negative_part(residual)
+
+    # import ipdb; ipdb.set_trace()
+    result = pos - 10*neg
+
+
+    return result
 
 
 result = least_squares(f, [1,1])
