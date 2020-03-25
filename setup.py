@@ -7,7 +7,7 @@ dirname = os.path.dirname(__file__)
 
 setup(
     # Basic info
-    name="operation_pricing",
+    name="operation_costing",
     # version=version,
     author="Onur Solmaz",
     author_email="onur@casperlabs.io",

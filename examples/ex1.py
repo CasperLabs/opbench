@@ -1,4 +1,4 @@
-from operation_pricing.operations import diophantine
+from operation_costing.operations import diophantine
 
 N_INPUTS = 10000
 

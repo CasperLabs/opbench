@@ -1,4 +1,4 @@
-from operation_pricing.operations import sha1
+from operation_costing.operations import sha1
 
 N_INPUTS = 10000
 

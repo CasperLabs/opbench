@@ -1,4 +1,4 @@
-from operation_pricing.operations import diophantine
+from operation_costing.operations import diophantine
 import pandas as pd
 from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.pyplot as plt

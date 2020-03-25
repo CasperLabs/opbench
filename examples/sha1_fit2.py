@@ -1,4 +1,4 @@
-from operation_pricing.operations import diophantine
+from operation_costing.operations import diophantine
 import pandas as pd
 import matplotlib.pyplot as plt
 from scipy.optimize import least_squares, fmin

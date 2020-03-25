@@ -4,7 +4,7 @@ import hashlib  # hashlib is only used inside the Test class
 import unittest
 
 import numpy as np
-from operation_pricing import Operation
+from operation_costing import Operation
 from .helper import randrange_logarithmic
 
 LOWER_LIMIT = 100

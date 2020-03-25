@@ -1,5 +1,5 @@
 from math import log
-from operation_pricing import Operation
+from operation_costing import Operation
 from .helper import randrange_logarithmic
 
 LOWER_LIMIT = 10
