@@ -1,9 +1,10 @@
+from operation_costing.operations import diophantine
 import pandas as pd
 import matplotlib.pyplot as plt
 from scipy.optimize import least_squares
 import numpy as np
 
-df = pd.read_csv("data_sha1.csv")
+df = pd.read_csv("data_selection_sort.csv")
 
 timevar_list = df["time_vars"].to_list()
 
@@ -34,15 +35,15 @@ def negative_part(x):
 
 
 def f(x):
-    m, n = x
+    a, b = x
 
-    residual = m*df["time_var_0"]+n-df["mean_time"]
+    residual = a*df["time_var_0"]**2+b - df["mean_time"]
 
     pos = positive_part(residual)
     neg = negative_part(residual)
 
     # import ipdb; ipdb.set_trace()
-    result = pos - 10*neg
+    result = pos - neg
 
 
     return result
@@ -50,10 +51,10 @@ def f(x):
 
 result = least_squares(f, [1,1])
 
-m, n = result.x
+a, b = result.x
 
 X = np.linspace(df["time_var_0"].min(), df["time_var_0"].max(), 1000)
-Y = m*X + n
+Y = a*X**2 + b
 
 
 plt.scatter(df["time_var_0"], df["mean_time"], marker="x")
