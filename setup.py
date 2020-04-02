@@ -1,9 +1,6 @@
-import os
-
+import numpy
 from setuptools import setup, find_packages
-
-dirname = os.path.dirname(__file__)
-
+from Cython.Build import cythonize
 
 setup(
     # Basic info
@@ -19,11 +16,10 @@ setup(
     # package_dir={'': 'highway_economic_simulator'},
     packages=find_packages(exclude=["contrib", "docs", "tests"]),
     # packages=find_packages('highway_economic_simulator'),
-    install_requires=[
-        "numpy",
-        "progressbar2",
-        "sortedcontainers",
-    ],
+    install_requires=["numpy", "progressbar2", "sortedcontainers",],
+
+    ext_modules = cythonize("operation_costing/*.pyx"),
+    include_dirs = [numpy.get_include()],
     zip_safe=False,
     platforms="any",
 )

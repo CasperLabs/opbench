@@ -6,9 +6,13 @@ import unittest
 import numpy as np
 from operation_costing import Operation
 from .helper import randrange_logarithmic
+from random import randrange
 
 LOWER_LIMIT = 100
-UPPER_LIMIT = 100000
+UPPER_LIMIT = 30000
+
+from operation_costing.models import linear
+
 
 class SHA1Hash:
     """
@@ -112,7 +116,8 @@ class SHA1HashOperation(Operation):
         return SHA1Hash(input_arr[0]).final_hash()
 
     def _generate_input(self):
-        size = randrange_logarithmic(LOWER_LIMIT, UPPER_LIMIT)
+        size = randrange(LOWER_LIMIT, UPPER_LIMIT)
+        # size = randrange_logarithmic(LOWER_LIMIT, UPPER_LIMIT)
 
         result = np.random.bytes(size)
 
@@ -123,4 +128,12 @@ class SHA1HashOperation(Operation):
 
         return (len(a),)
 
+    def get_n_model_param(self):
+        return 2
+
+    def get_model_input_size(self):
+        return 1
+
+    def get_runtime_model(self):
+        return linear
 

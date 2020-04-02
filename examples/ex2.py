@@ -18,15 +18,15 @@ timevar_keys = []
 
 for i in range(n_timevars):
     new_col = [j[i] for j in timevar_list]
-    key = "time_var_%d"%i
+    key = "time_var_%d" % i
 
     timevar_keys.append(key)
 
     df[key] = pd.DataFrame(new_col)
 
-df["mean_time"] = df["elapsed_time"]/df["n_exec"]
+df["mean_time"] = df["elapsed_time"] / df["n_exec"]
 
-ax.scatter(df["time_var_0"]+df["time_var_1"], df["time_var_2"], df["mean_time"], marker="x")
+ax.scatter(
+    df["time_var_0"] + df["time_var_1"], df["time_var_2"], df["mean_time"], marker="x"
+)
 plt.show()
-
-import ipdb; ipdb.set_trace()

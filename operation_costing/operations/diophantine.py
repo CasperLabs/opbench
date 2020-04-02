@@ -115,8 +115,6 @@ def extended_gcd(a, b):
     return (d, x, y)
 
 
-
-
 class DiophantineOperation(Operation):
     def execute(self, input_arr):
         return diophantine(*input_arr)
@@ -126,17 +124,17 @@ class DiophantineOperation(Operation):
         b = randrange_logarithmic(LOWER_LIMIT, UPPER_LIMIT)
 
         gcd = greatest_common_divisor(a, b)
-        c = gcd*randrange_logarithmic(LOWER_LIMIT, UPPER_LIMIT)
+        c = gcd * randrange_logarithmic(LOWER_LIMIT, UPPER_LIMIT)
 
-        return (a,b,c)
+        return (a, b, c)
 
     def map_input(self, input_arr):
         a, b, c = input_arr
 
         time_vars = (
-            round(log(a)/log(10)),
-            round(log(b)/log(10)),
-            round(log(c)/log(10)),
+            round(log(a) / log(10)),
+            round(log(b) / log(10)),
+            round(log(c) / log(10)),
         )
 
         return time_vars

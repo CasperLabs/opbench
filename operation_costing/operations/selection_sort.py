@@ -3,6 +3,9 @@ from operation_costing import Operation
 from .helper import randrange_logarithmic
 import random
 
+from operation_costing.models import quadratic
+
+
 LOWER_LIMIT = 10
 UPPER_LIMIT = 1000
 
@@ -49,4 +52,20 @@ class SelectionSortOperation(Operation):
         a = input_arr[0]
 
         return (len(a),)
+
+    def runtime_model(self, param, x):
+        a, b, c = param
+        x_ = x[0]
+
+        return a * x_ ** 2 + b * x_ + c
+
+    def get_n_model_param(self):
+        return 3
+
+    def get_model_input_size(self):
+        return 1
+
+    def get_runtime_model(self):
+        return quadratic
+
 
