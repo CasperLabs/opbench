@@ -20,6 +20,8 @@ MODEL_STR = "y = a*x^2 + b*x + c"
 PARAM_STR = ["a", "b", "c"]
 X_LABEL = "Number of elements"
 X0 = [1, 1, 1]
+
+
 def MODEL(param, x):
     return param[0] * x ** 2 + param[1] * x + param[2]
 
@@ -60,7 +62,6 @@ for i in range(n_timevars):
 
 
 df["mean_time"] = df["elapsed_time"] / df["n_exec"]
-
 
 
 def g(x, return_params=False):
@@ -137,7 +138,13 @@ plt.title(
     "%s implemented in pure Python\n\
 Points above: %d, Points below: %d, \n\
 Targeted DoC: %.1f%% Resulting DoC: %.1f%%"
-    % (OPERATION_NAME, len(x_above), len(x_below), DEGREE_OF_CONFIDENCE * 100, ratio * 100)
+    % (
+        OPERATION_NAME,
+        len(x_above),
+        len(x_below),
+        DEGREE_OF_CONFIDENCE * 100,
+        ratio * 100,
+    )
 )
 plt.xlabel(X_LABEL)
 plt.ylabel("Runtime [second]")

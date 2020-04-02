@@ -67,5 +67,3 @@ class SelectionSortOperation(Operation):
 
     def get_runtime_model(self):
         return quadratic
-
-

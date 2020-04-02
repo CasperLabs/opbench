@@ -136,4 +136,3 @@ class SHA1HashOperation(Operation):
 
     def get_runtime_model(self):
         return linear
-

@@ -80,16 +80,19 @@ class Operation:
         n_model_param = self.get_n_model_param()
         model_input_size = self.get_model_input_size()
 
-        assert(False not in [len(i) == model_input_size for i in input_arr])
+        assert False not in [len(i) == model_input_size for i in input_arr]
 
         input_arr = np.array(input_arr)
 
         runtime_arr = (df["elapsed_time"] / df["n_exec"]).to_numpy()
 
-        # X0 = np.ones(n_model_param)
-
-        param = fit(self.get_runtime_model(), model_input_size, n_model_param, input_arr, runtime_arr, degree_of_confidence)
-
-        # import ipdb; ipdb.set_trace()
+        param = fit(
+            self.get_runtime_model(),
+            model_input_size,
+            n_model_param,
+            input_arr,
+            runtime_arr,
+            degree_of_confidence,
+        )
 
         return param

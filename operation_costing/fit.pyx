@@ -13,8 +13,6 @@ def modify_residual(x, alpha):
 modify_residual_vectorized = np.vectorize(modify_residual)
 
 def fit(runtime_model, n_input, n_param, input_arr, runtime_arr, degree_of_confidence):
-    global total_elapsed
-    total_elapsed = 0
 
     input_size = len(input_arr)
 
@@ -59,14 +57,12 @@ def fit(runtime_model, n_input, n_param, input_arr, runtime_arr, degree_of_confi
 
         outer_residual = ratio - degree_of_confidence
 
-        logging.debug('Residual: %.10f'%(abs(outer_residual)))
+        logging.info('Residual: %.10f'%(abs(outer_residual)))
 
         return outer_residual
 
     # result = fmin(g, [1])
     result = fsolve(g, [1.])
     param = g(result, return_params=True)
-
-    print("Total elapsed time for least squares: %f"%total_elapsed)
 
     return param
