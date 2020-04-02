@@ -1,5 +1,5 @@
-from operation_costing.operations import *
-from operation_costing.plotting import plot_single_input_operation
+from operation_benchmarking.operations import *
+from operation_benchmarking.plotting import plot_single_input_operation
 import logging
 
 logging.basicConfig(level=logging.INFO)

@@ -4,7 +4,7 @@ from Cython.Build import cythonize
 
 setup(
     # Basic info
-    name="operation_costing",
+    name="operation_benchmarking",
     # version=version,
     author="Onur Solmaz",
     author_email="onur@casperlabs.io",
@@ -17,7 +17,7 @@ setup(
     packages=find_packages(exclude=["contrib", "docs", "tests"]),
     # packages=find_packages('highway_economic_simulator'),
     install_requires=["numpy", "progressbar2", "sortedcontainers",],
-    ext_modules=cythonize("operation_costing/*.pyx"),
+    ext_modules=cythonize("operation_benchmarking/*.pyx"),
     include_dirs=[numpy.get_include()],
     zip_safe=False,
     platforms="any",

@@ -1,9 +1,9 @@
 import numpy as np
-from operation_costing import Operation
+from operation_benchmarking import Operation
 from .helper import randrange_logarithmic
 import random
 
-from operation_costing.models import quadratic
+from operation_benchmarking.models import quadratic
 
 
 LOWER_LIMIT = 10

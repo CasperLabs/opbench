@@ -6,7 +6,7 @@ import numpy as np
 
 from scipy.optimize import least_squares, fmin, fsolve
 
-from operation_costing.fit import fit
+from operation_benchmarking.fit import fit
 
 
 class Operation:

@@ -2,7 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from scipy.optimize import least_squares, fmin, fsolve
 import numpy as np
-from operation_costing.helper import parse_benchmark_result
+from operation_benchmarking.helper import parse_benchmark_result
 
 
 def plot_single_input_operation(

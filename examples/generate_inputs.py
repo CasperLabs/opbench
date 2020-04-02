@@ -1,4 +1,4 @@
-from operation_costing.operations import *
+from operation_benchmarking.operations import *
 
 N_INPUTS = 10000
 

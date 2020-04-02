@@ -4,14 +4,14 @@ import hashlib  # hashlib is only used inside the Test class
 import unittest
 
 import numpy as np
-from operation_costing import Operation
+from operation_benchmarking import Operation
 from .helper import randrange_logarithmic
 from random import randrange
 
 LOWER_LIMIT = 100
 UPPER_LIMIT = 30000
 
-from operation_costing.models import linear
+from operation_benchmarking.models import linear
 
 
 class SHA1Hash:
