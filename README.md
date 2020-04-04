@@ -1,7 +1,7 @@
 # operation_benchmarking
 
-Proof of Concept for assigning runtime models to operations (opcodes, functions, etc.) in distributed networks.
-See [Metering resource usage in blockchains](https://hackmd.io/@onur/metering_resource_usage).
+Proof of Concept for assigning predictive models of runtime to operations (opcodes, functions, etc.) in distributed networks.
+See [the related write-up](https://hackmd.io/@onur/predictive_models_runtime).
 
 ## Install
 
