@@ -6,14 +6,7 @@ from operation_benchmarking.helper import parse_benchmark_result
 
 
 def plot_single_input_operation(
-    operation,
-    data_file,
-    param,
-    output_file,
-    operation_name,
-    model_str,
-    param_str,
-    x_label,
+    operation, param, data_file, output_file,
 ):
 
     assert operation.get_model_input_size() == 1
@@ -28,8 +21,8 @@ def plot_single_input_operation(
     # Y = np.array([MODEL(param, i) for i in X])
     Y = model(param, X[:, np.newaxis])
 
-    x_below = []
-    x_above = []
+    # x_below = []
+    # x_above = []
     y_below = []
     y_above = []
 
@@ -48,21 +41,90 @@ def plot_single_input_operation(
     plt.scatter(x_below, y_below, color="green", marker="x")
     plt.scatter(x_above, y_above, color="blue", marker="x")
 
-    fit_label = "Fit " + model_str + " -> "
-    fit_label += " ".join(["%s = %.3g" % (i, j) for i, j in zip(param_str, param)])
+    fit_label = "Fit " + operation.get_model_definition() + " -> "
+    fit_label += " ".join(
+        [
+            "%s = %.3g" % (i, j)
+            for i, j in zip(operation.get_model_parameter_labels(), param)
+        ]
+    )
 
     plt.plot(X, Y, color="red", label=fit_label)
 
     plt.title(
-        "%s implemented in pure Python\n\
+        "Operation: %s \n\
     Points above: %d, Points below: %d, DoC: %.1f%%"
-        % (operation_name, len(x_above), len(x_below), ratio * 100,)
+        % (operation.get_name(), len(x_above), len(x_below), ratio * 100,)
     )
-    plt.xlabel(x_label)
+    plt.xlabel(
+        operation.get_model_variable_descriptions()[0]
+        + " ["
+        + operation.get_model_variable_units()[0]
+        + "]"
+    )
     plt.ylabel("Runtime [second]")
 
     plt.grid()
     plt.legend()
     plt.tight_layout()
-    plt.savefig(output_file, dpi=150)
+    plt.savefig(output_file, dpi=300)
     # plt.show()
+
+def plot_argumentless_operation(
+    operation, constant, data_file, output_file,
+):
+
+    assert operation.get_model_input_size() == 0
+
+    input_arr, runtime_arr = parse_benchmark_result(data_file)
+
+    mean = np.mean(runtime_arr)
+    std = np.std(runtime_arr)
+
+    y_left = []
+    y_right = []
+
+    for i in zip(runtime_arr):
+        if constant >= i:
+            y_left.append(i)
+        else:
+            y_right.append(i)
+
+    ratio = len(y_left) / (len(y_right) + len(y_left))
+
+    plt.figure()
+    plt.grid()
+
+    plt.hist(runtime_arr, bins="auto", range=(mean-4*std, mean+4*std), ec="k")
+
+    plt.axvline(constant, color='r', linewidth=2, label="Threshold")
+
+    plt.title(
+        "Operation: %s \n\
+    Points left: %d, Points right: %d, DoC: %.1f%%"
+        % (operation.get_name(), len(y_left), len(y_right), ratio * 100,)
+    )
+    plt.xlabel("Runtime [second]")
+    plt.ylabel("Number of points")
+
+    plt.xlim([max(0, mean-4*std), max(mean+4*std, constant)])
+
+    tick_vals = [mean-3*std, mean-2*std, mean-std, mean, mean+std, mean+2*std, mean+3*std]
+
+    plt.xticks(
+        tick_vals,
+        [
+            '%.2g\n$\mu-3\sigma$'%tick_vals[0],
+            '%.2g\n$\mu-2\sigma$'%tick_vals[1],
+            '%.2g\n$\mu-\sigma$'%tick_vals[2],
+            '%.2g\n$\mu$'%tick_vals[3],
+            '%.2g\n$\mu+\sigma$'%tick_vals[4],
+            '%.2g\n$\mu+2\sigma$'%tick_vals[5],
+            '%.2g\n$\mu+3\sigma$'%tick_vals[6],
+        ]
+    )
+
+    plt.legend()
+    plt.tight_layout()
+    plt.savefig(output_file, dpi=300)
+

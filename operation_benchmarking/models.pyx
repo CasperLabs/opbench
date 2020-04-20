@@ -4,6 +4,18 @@ cimport cython
 
 @cython.boundscheck(False)
 @cython.wraparound(False)
+def constant(double[:] param, double[:, :] input_arr):
+    input_size = input_arr.shape[0]
+
+    result = numpy.zeros(input_size, dtype=numpy.float64)
+
+    for i in range(input_size):
+        result[i] = param[0]
+
+    return result
+
+@cython.boundscheck(False)
+@cython.wraparound(False)
 def linear(double[:] param, double[:, :] input_arr):
     input_size = input_arr.shape[0]
 

@@ -12,7 +12,7 @@ def modify_residual(x, alpha):
 
 modify_residual_vectorized = np.vectorize(modify_residual)
 
-def fit(runtime_model, n_input, n_param, input_arr, runtime_arr, degree_of_confidence):
+def fit(runtime_model, n_input, n_param, input_arr, runtime_arr, degree_of_confidence, x0=None, bounds=None):
 
     input_size = len(input_arr)
 
@@ -22,7 +22,8 @@ def fit(runtime_model, n_input, n_param, input_arr, runtime_arr, degree_of_confi
     if runtime_arr.dtype is not np.float64:
         runtime_arr = runtime_arr.astype(np.float64)
 
-    X0 = np.ones(n_param, dtype=np.float64)
+    if not x0:
+        x0 = np.ones(n_param, dtype=np.float64)
 
     @cython.boundscheck(False)
     @cython.wraparound(False)
@@ -40,7 +41,11 @@ def fit(runtime_model, n_input, n_param, input_arr, runtime_arr, degree_of_confi
 
             return residual
 
-        result = least_squares(f, X0)
+        if bounds:
+            result = least_squares(f, x0, bounds=bounds)
+        else:
+            result = least_squares(f, x0)
+
         param = result.x
 
         if return_params:
