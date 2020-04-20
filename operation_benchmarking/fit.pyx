@@ -42,9 +42,9 @@ def fit(runtime_model, n_input, n_param, input_arr, runtime_arr, degree_of_confi
             return residual
 
         if bounds:
-            result = least_squares(f, x0, bounds=bounds)
+            result = least_squares(f, x0, bounds=bounds, method="dogbox")
         else:
-            result = least_squares(f, x0)
+            result = least_squares(f, x0, method="dogbox")
 
         param = result.x
 

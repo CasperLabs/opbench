@@ -8,7 +8,11 @@ from scipy.optimize import least_squares, fmin, fsolve
 
 from operation_benchmarking.fit import fit
 from operation_benchmarking.models import constant, linear, quadratic
-from operation_benchmarking.plotting import plot_single_input_operation
+from operation_benchmarking.plotting import (
+    plot_single_input_operation,
+    plot_argumentless_operation,
+)
+from operation_benchmarking.helper import parse_benchmark_result
 
 
 class Operation:
@@ -89,21 +93,35 @@ class Operation:
         ofile.close()
 
     def fit_parameters(
-        self, benchmark_data_file, degree_of_confidence, x0=None, bounds=None
+        self,
+        benchmark_data_file,
+        degree_of_confidence,
+        x0=None,
+        bounds=None,
+        remove_outlier_sigma_count=5,
     ):
 
-        df = pd.read_csv(benchmark_data_file)
-        input_arr = df["args"].to_list()
-        input_arr = [eval(i) for i in input_arr]
+        input_arr, runtime_arr = parse_benchmark_result(benchmark_data_file)
+
+        if remove_outlier_sigma_count != None:
+            input_arr_new = []
+            runtime_arr_new = []
+
+            mean = np.mean(runtime_arr)
+            std = np.std(runtime_arr)
+
+            for i, j in zip(input_arr, runtime_arr):
+                if abs(j - mean) <= remove_outlier_sigma_count * std:
+                    input_arr_new.append(i)
+                    runtime_arr_new.append(j)
+
+            input_arr = np.array(input_arr_new)
+            runtime_arr = np.array(runtime_arr_new)
 
         n_model_param = self.get_n_model_param()
         model_input_size = self.get_model_input_size()
 
         assert False not in [len(i) == model_input_size for i in input_arr]
-
-        input_arr = np.array(input_arr)
-
-        runtime_arr = (df["total_elapsed_time"] / df["n_exec"]).to_numpy()
 
         param = fit(
             self.get_runtime_model(),
@@ -119,7 +137,9 @@ class Operation:
         return param
 
     def plot_model_performance(self, param, data_file, output_file):
-        if self.get_model_input_size() == 1:
+        if self.get_model_input_size() == 0:
+            plot_argumentless_operation(self, param[0], data_file, output_file)
+        elif self.get_model_input_size() == 1:
             plot_single_input_operation(self, param, data_file, output_file)
 
 
@@ -170,4 +190,3 @@ class ConstantOperation(Operation):
 
     def get_model_variable_units(self):
         return []
-

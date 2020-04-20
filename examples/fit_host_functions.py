@@ -1,19 +1,44 @@
-# from operation_benchmarking.operations import *
-from operation_benchmarking.operations.host_functions import *
-from operation_benchmarking.plotting import plot_argumentless_operation
+import os
 import logging
 
+from operation_benchmarking.plotting import plot_argumentless_operation
+from operation_benchmarking.helper import parse_benchmark_result
+from operation_benchmarking.operations.host_functions import *
 
 import matplotlib.pyplot as plt
 
 logging.basicConfig(level=logging.INFO)
 
-from operation_benchmarking.helper import parse_benchmark_result
 
-# input_arr, runtime_arr = parse_benchmark_result("host-function-metrics/add_local.csv")
-# plt.plot(input_arr[:,0], runtime_arr, 'o')
-# plt.show()
+DEGREE_OF_CONFIDENCE = 0.99
+DATA_DIR = "host-function-metrics"
+PLOT_DIR = "out"
 
+
+operations = [
+    AddAssociatedKeyOperation(),
+    AddOperation(),
+    CreatePurseOperation(),
+    GetArgSizeOperation(),
+    GetBalanceOperation(),
+    GetBlocktimeOperation(),
+    GetCallerOperation(),
+    GetMainPurseOperation(),
+    GetPhaseOperation(),
+    GetSystemContractOperation(),
+    IsValidUrefOperation(),
+    ReadValueOperation(),
+    RemoveAssociatedKeyOperation(),
+    RevertOperation(),
+    SetActionThresholdOperation(),
+    TransferFromPurseToAccountOperation(),
+    TransferFromPurseToPurseOperation(),
+    TransferToAccountOperation(),
+    UpdateAssociatedKeyOperation(),
+]
+
+if not os.path.exists(PLOT_DIR):
+    os.makedirs(PLOT_DIR)
 
 # op1 = AddLocalOperation()
 # op1_param = op1.fit_parameters(
@@ -23,29 +48,23 @@ from operation_benchmarking.helper import parse_benchmark_result
 #     op1_param, "host-function-metrics/add_local.csv", "data_op1.jpg",
 # )
 
+for op in operations:
+    logging.info("Fitting model for operation: " + op.get_name())
+    data_file_path = os.path.join(DATA_DIR, op.get_name() + ".csv")
+    plot_path = os.path.join(PLOT_DIR, op.get_name() + ".jpg")
 
-op2 = CreatePurseOperation()
-op2_param = op2.fit_parameters(
-    "host-function-metrics/create_purse.csv",
-    0.99,
-    bounds=((0), (np.inf))
-)
-plot_argumentless_operation(
-    op2, op2_param[0], "host-function-metrics/create_purse.csv", "data_create_purse.jpg",
-)
+    op_param = op.fit_parameters(
+        data_file_path, DEGREE_OF_CONFIDENCE, bounds=((0), (np.inf))
+    )
 
-import ipdb; ipdb.set_trace()
+    op.plot_model_performance(
+        op_param, data_file_path, plot_path,
+    )
 
-# plot_single_input_operation(
-#     op2,
-#     "host-function-metrics/add_local.csv",
-#     op2_param,
-#     "data_op2.jpg",
-#     "SHA1",
-#     "y = m*x + n",
-#     ["m", "n"],
-#     "Input size [byte]",
-# )
+    # input_arr, runtime_arr = parse_benchmark_result(data_file_path)
+    # plt.hist(runtime_arr)
+    # plt.show()
 
+import ipdb
 
-# import ipdb; ipdb.set_trace()
+ipdb.set_trace()

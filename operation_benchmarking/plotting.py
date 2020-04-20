@@ -70,6 +70,7 @@ def plot_single_input_operation(
     plt.savefig(output_file, dpi=300)
     # plt.show()
 
+
 def plot_argumentless_operation(
     operation, constant, data_file, output_file,
 ):
@@ -92,12 +93,12 @@ def plot_argumentless_operation(
 
     ratio = len(y_left) / (len(y_right) + len(y_left))
 
-    plt.figure()
+    fig = plt.figure()
     plt.grid()
 
-    plt.hist(runtime_arr, bins="auto", range=(mean-4*std, mean+4*std), ec="k")
+    plt.hist(runtime_arr, bins=64, range=(mean - 4 * std, mean + 4 * std), ec="k")
 
-    plt.axvline(constant, color='r', linewidth=2, label="Threshold")
+    plt.axvline(constant, color="r", linewidth=2, label="Threshold = %.4g" % constant)
 
     plt.title(
         "Operation: %s \n\
@@ -107,24 +108,48 @@ def plot_argumentless_operation(
     plt.xlabel("Runtime [second]")
     plt.ylabel("Number of points")
 
-    plt.xlim([max(0, mean-4*std), max(mean+4*std, constant)])
+    plt.xlim([max(0, mean - 4 * std), max(mean + 4 * std, constant)])
 
-    tick_vals = [mean-3*std, mean-2*std, mean-std, mean, mean+std, mean+2*std, mean+3*std]
+    tick_vals = [
+        mean - 3 * std,
+        mean - 2 * std,
+        mean - std,
+        mean,
+        mean + std,
+        mean + 2 * std,
+        mean + 3 * std,
+    ]
+
+    tick_labels = [
+        "%.2g\n$\mu-3\sigma$" % tick_vals[0],
+        "%.2g\n$\mu-2\sigma$" % tick_vals[1],
+        "%.2g\n$\mu-\sigma$" % tick_vals[2],
+        "%.2g\n$\mu$" % tick_vals[3],
+        "%.2g\n$\mu+\sigma$" % tick_vals[4],
+        "%.2g\n$\mu+2\sigma$" % tick_vals[5],
+        "%.2g\n$\mu+3\sigma$" % tick_vals[6],
+    ]
+
+    negative = False
+    while True:
+        if len(tick_vals) == 0:
+            break
+        if tick_vals[0] > 0:
+            break
+        tick_vals.pop(0)
+        tick_labels.pop(0)
+        negative = True
+
+    if negative:
+        tick_vals.insert(0, 0)
+        tick_labels.insert(0, "0")
 
     plt.xticks(
-        tick_vals,
-        [
-            '%.2g\n$\mu-3\sigma$'%tick_vals[0],
-            '%.2g\n$\mu-2\sigma$'%tick_vals[1],
-            '%.2g\n$\mu-\sigma$'%tick_vals[2],
-            '%.2g\n$\mu$'%tick_vals[3],
-            '%.2g\n$\mu+\sigma$'%tick_vals[4],
-            '%.2g\n$\mu+2\sigma$'%tick_vals[5],
-            '%.2g\n$\mu+3\sigma$'%tick_vals[6],
-        ]
+        tick_vals, tick_labels,
     )
 
     plt.legend()
     plt.tight_layout()
     plt.savefig(output_file, dpi=300)
 
+    plt.close()
