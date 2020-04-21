@@ -5,6 +5,7 @@ import logging
 cimport numpy
 cimport cython
 
+from math import ceil
 from scipy.optimize import least_squares, fmin, fsolve
 
 def modify_residual(x, alpha):
@@ -71,3 +72,26 @@ def fit(runtime_model, n_input, n_param, input_arr, runtime_arr, degree_of_confi
     param = g(result, return_params=True)
 
     return param
+
+
+def fit_constant(double[:] runtime_arr, degree_of_confidence):
+    assert(0 <= degree_of_confidence <= 1)
+
+    if len(runtime_arr) < 10:
+        raise Exception("Data series too small for fitting")
+    sorted_ = np.sort(runtime_arr)
+
+    idx = ceil((len(runtime_arr)-1)*degree_of_confidence)
+
+    if idx == len(runtime_arr)-1:
+        return sorted_[-1]
+
+    lower_bound = sorted_[idx]
+    upper_bound = sorted_[idx+1]
+
+    lower_weight = np.mean(sorted_[:idx+1])
+    upper_weight = np.mean(sorted_[idx+1:])
+
+    result = lower_bound + (upper_bound - lower_bound) * (lower_weight) / (lower_weight + upper_weight)
+
+    return result

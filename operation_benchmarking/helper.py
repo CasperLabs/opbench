@@ -2,7 +2,9 @@ import pandas as pd
 import numpy as np
 
 
-def parse_benchmark_result(csv_file_path):
+def parse_benchmark_result(
+    csv_file_path, remove_outlier_sigma_count=5,
+):
     df = pd.read_csv(csv_file_path)
     input_arr = df["args"].to_list()
     input_arr = [eval(i) for i in input_arr]
@@ -15,5 +17,20 @@ def parse_benchmark_result(csv_file_path):
 
     if runtime_arr.dtype is not np.float64:
         runtime_arr = runtime_arr.astype(np.float64)
+
+    if remove_outlier_sigma_count != None:
+        input_arr_new = []
+        runtime_arr_new = []
+
+        mean = np.mean(runtime_arr)
+        std = np.std(runtime_arr)
+
+        for i, j in zip(input_arr, runtime_arr):
+            if abs(j - mean) <= remove_outlier_sigma_count * std:
+                input_arr_new.append(i)
+                runtime_arr_new.append(j)
+
+        input_arr = np.array(input_arr_new)
+        runtime_arr = np.array(runtime_arr_new)
 
     return input_arr, runtime_arr
