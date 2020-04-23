@@ -3,18 +3,6 @@ import numpy as np
 from operation_benchmarking.operation import ConstantOperation, LinearOperation
 from operation_benchmarking.models import constant, linear, quadratic
 
-
-class AddLocalOperation(LinearOperation):
-    def get_name(self):
-        return "add_local"
-
-    def get_model_variable_descriptions(self):
-        return ["Input size"]
-
-    def get_model_variable_units(self):
-        return ["byte"]
-
-
 # Constant operations
 
 
@@ -111,3 +99,160 @@ class TransferToAccountOperation(ConstantOperation):
 class UpdateAssociatedKeyOperation(ConstantOperation):
     def get_name(self):
         return "update_associated_key"
+
+
+# Linear operations
+
+
+class AddLocalOperation(LinearOperation):
+    def get_name(self):
+        return "add_local"
+
+    def get_model_variable_descriptions(self):
+        return ["Placeholder"]
+
+    def get_model_variable_units(self):
+        return ["Placeholder"]
+
+
+class CallContractOperation(LinearOperation):
+    def get_name(self):
+        return "call_contract"
+
+    def get_model_variable_descriptions(self):
+        return ["Placeholder"]
+
+    def get_model_variable_units(self):
+        return ["Placeholder"]
+
+
+class GetArgOperation(LinearOperation):
+    def get_name(self):
+        return "get_arg"
+
+    def get_model_variable_descriptions(self):
+        return ["Placeholder"]
+
+    def get_model_variable_units(self):
+        return ["Placeholder"]
+
+
+class GetKeyOperation(LinearOperation):
+    def get_name(self):
+        return "get_key"
+
+    def get_model_variable_descriptions(self):
+        return ["Placeholder"]
+
+    def get_model_variable_units(self):
+        return ["Placeholder"]
+
+
+class HasKeyOperation(LinearOperation):
+    def get_name(self):
+        return "has_key"
+
+    def get_model_variable_descriptions(self):
+        return ["Placeholder"]
+
+    def get_model_variable_units(self):
+        return ["Placeholder"]
+
+
+class LoadNamedKeysOperation(LinearOperation):
+    def get_name(self):
+        return "load_named_keys"
+
+    def get_model_variable_descriptions(self):
+        return ["Placeholder"]
+
+    def get_model_variable_units(self):
+        return ["Placeholder"]
+
+
+class NewUrefOperation(LinearOperation):
+    def get_name(self):
+        return "new_uref"
+
+    def get_model_variable_descriptions(self):
+        return ["Placeholder"]
+
+    def get_model_variable_units(self):
+        return ["Placeholder"]
+
+
+class PrintOperation(LinearOperation):
+    def get_name(self):
+        return "print"
+
+    def get_model_variable_descriptions(self):
+        return ["Placeholder"]
+
+    def get_model_variable_units(self):
+        return ["Placeholder"]
+
+
+class PutKeyOperation(LinearOperation):
+    def get_name(self):
+        return "put_key"
+
+    def get_model_variable_descriptions(self):
+        return ["Placeholder"]
+
+    def get_model_variable_units(self):
+        return ["Placeholder"]
+
+
+class ReadHostBufferOperation(LinearOperation):
+    def get_name(self):
+        return "read_host_buffer"
+
+    def get_model_variable_descriptions(self):
+        return ["Placeholder"]
+
+    def get_model_variable_units(self):
+        return ["Placeholder"]
+
+
+class ReadValueLocalOperation(LinearOperation):
+    def get_name(self):
+        return "read_value_local"
+
+    def get_model_variable_descriptions(self):
+        return ["Placeholder"]
+
+    def get_model_variable_units(self):
+        return ["Placeholder"]
+
+
+class RemoveKeyOperation(LinearOperation):
+    def get_name(self):
+        return "remove_key"
+
+    def get_model_variable_descriptions(self):
+        return ["Placeholder"]
+
+    def get_model_variable_units(self):
+        return ["Placeholder"]
+
+
+class RetOperation(LinearOperation):
+    def get_name(self):
+        return "ret"
+
+    def get_model_variable_descriptions(self):
+        return ["Placeholder"]
+
+    def get_model_variable_units(self):
+        return ["Placeholder"]
+
+
+class WriteOperation(LinearOperation):
+    def get_name(self):
+        return "write"
+
+    def get_model_variable_descriptions(self):
+        return ["Placeholder"]
+
+    def get_model_variable_units(self):
+        return ["Placeholder"]

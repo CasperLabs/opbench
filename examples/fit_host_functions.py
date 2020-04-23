@@ -11,11 +11,13 @@ logging.basicConfig(level=logging.INFO)
 
 
 DEGREE_OF_CONFIDENCE = 0.99
+ROW_LIMIT = 10_000
 DATA_DIR = "host-function-metrics"
 PLOT_DIR = "out"
 
 
 operations = [
+    # Constant operations
     AddAssociatedKeyOperation(),
     AddOperation(),
     CreatePurseOperation(),
@@ -35,6 +37,21 @@ operations = [
     TransferFromPurseToPurseOperation(),
     TransferToAccountOperation(),
     UpdateAssociatedKeyOperation(),
+    # Linear operations
+    AddLocalOperation(),
+    CallContractOperation(),
+    GetArgOperation(),
+    GetKeyOperation(),
+    HasKeyOperation(),
+    LoadNamedKeysOperation(),
+    NewUrefOperation(),
+    PrintOperation(),
+    PutKeyOperation(),
+    ReadHostBufferOperation(),
+    ReadValueLocalOperation(),
+    RemoveKeyOperation(),
+    RetOperation(),
+    WriteOperation(),
 ]
 
 if not os.path.exists(PLOT_DIR):
@@ -53,18 +70,17 @@ for op in operations:
     data_file_path = os.path.join(DATA_DIR, op.get_name() + ".csv")
     plot_path = os.path.join(PLOT_DIR, op.get_name() + ".jpg")
 
+    n_param = op.get_n_model_param()
+    bounds = [[0 for i in range(n_param)], [np.inf for i in range(n_param)]]
+
     op_param = op.fit_parameters(
-        data_file_path, DEGREE_OF_CONFIDENCE, bounds=((0), (np.inf))
+        data_file_path, DEGREE_OF_CONFIDENCE, row_limit=ROW_LIMIT, bounds=bounds,
     )
 
     op.plot_model_performance(
-        op_param, data_file_path, plot_path,
+        op_param, data_file_path, plot_path, row_limit=ROW_LIMIT,
     )
 
     # input_arr, runtime_arr = parse_benchmark_result(data_file_path)
     # plt.hist(runtime_arr)
     # plt.show()
-
-import ipdb
-
-ipdb.set_trace()

@@ -3,7 +3,7 @@ import numpy as np
 
 
 def parse_benchmark_result(
-    csv_file_path, remove_outlier_sigma_count=5,
+    csv_file_path, remove_outlier_sigma_count=5, row_limit=None,
 ):
     df = pd.read_csv(csv_file_path)
     input_arr = df["args"].to_list()
@@ -32,5 +32,10 @@ def parse_benchmark_result(
 
         input_arr = np.array(input_arr_new)
         runtime_arr = np.array(runtime_arr_new)
+
+    if row_limit != None:
+        if len(runtime_arr) > row_limit:
+            input_arr = input_arr[:row_limit, :]
+            runtime_arr = runtime_arr[:row_limit]
 
     return input_arr, runtime_arr

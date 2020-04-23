@@ -37,6 +37,9 @@ class Operation:
     def get_n_model_param(self):
         raise Exception("This should be implemented")
 
+    def get_constant_term_idx(self):
+        raise Exception("This should be implemented")
+
     def get_model_input_size(self):
         raise Exception("This should be implemented")
 
@@ -95,10 +98,17 @@ class Operation:
         ofile.close()
 
     def fit_parameters(
-        self, benchmark_data_file, degree_of_confidence, x0=None, bounds=None,
+        self,
+        benchmark_data_file,
+        degree_of_confidence,
+        row_limit=None,
+        x0=None,
+        bounds=None,
     ):
 
-        input_arr, runtime_arr = parse_benchmark_result(benchmark_data_file)
+        input_arr, runtime_arr = parse_benchmark_result(
+            benchmark_data_file, row_limit=row_limit
+        )
 
         n_model_param = self.get_n_model_param()
         model_input_size = self.get_model_input_size()
@@ -109,9 +119,7 @@ class Operation:
             param = (fit_constant(runtime_arr, degree_of_confidence),)
         else:
             param = fit(
-                self.get_runtime_model(),
-                model_input_size,
-                n_model_param,
+                self,
                 input_arr,
                 runtime_arr,
                 degree_of_confidence,
@@ -121,11 +129,15 @@ class Operation:
 
         return param
 
-    def plot_model_performance(self, param, data_file, output_file):
+    def plot_model_performance(self, param, data_file, output_file, row_limit=None):
         if self.get_model_input_size() == 0:
-            plot_argumentless_operation(self, param[0], data_file, output_file)
+            plot_argumentless_operation(
+                self, param[0], data_file, output_file, row_limit=row_limit
+            )
         elif self.get_model_input_size() == 1:
-            plot_single_input_operation(self, param, data_file, output_file)
+            plot_single_input_operation(
+                self, param, data_file, output_file, row_limit=row_limit
+            )
 
 
 class LinearOperation(Operation):
@@ -139,6 +151,9 @@ class LinearOperation(Operation):
         return 2
 
     def get_model_input_size(self):
+        return 1
+
+    def get_constant_term_idx(self):
         return 1
 
     def get_runtime_model(self):
@@ -159,6 +174,9 @@ class ConstantOperation(Operation):
         return 1
 
     def get_model_input_size(self):
+        return 0
+
+    def get_constant_term_idx(self):
         return 0
 
     def get_runtime_model(self):

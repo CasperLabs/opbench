@@ -6,12 +6,12 @@ from operation_benchmarking.helper import parse_benchmark_result
 
 
 def plot_single_input_operation(
-    operation, param, data_file, output_file,
+    operation, param, data_file, output_file, row_limit=None,
 ):
 
     assert operation.get_model_input_size() == 1
 
-    input_arr, runtime_arr = parse_benchmark_result(data_file)
+    input_arr, runtime_arr = parse_benchmark_result(data_file, row_limit=row_limit)
 
     model = operation.get_runtime_model()
 
@@ -21,8 +21,8 @@ def plot_single_input_operation(
     # Y = np.array([MODEL(param, i) for i in X])
     Y = model(param, X[:, np.newaxis])
 
-    # x_below = []
-    # x_above = []
+    x_below = []
+    x_above = []
     y_below = []
     y_above = []
 
@@ -72,12 +72,12 @@ def plot_single_input_operation(
 
 
 def plot_argumentless_operation(
-    operation, constant, data_file, output_file,
+    operation, constant, data_file, output_file, row_limit=None,
 ):
 
     assert operation.get_model_input_size() == 0
 
-    input_arr, runtime_arr = parse_benchmark_result(data_file)
+    input_arr, runtime_arr = parse_benchmark_result(data_file, row_limit=row_limit)
 
     mean = np.mean(runtime_arr)
     std = np.std(runtime_arr)
