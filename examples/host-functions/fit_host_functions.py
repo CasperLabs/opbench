@@ -14,7 +14,7 @@ DEGREE_OF_CONFIDENCE = 0.99
 ROW_LIMIT = 10_000
 DATA_DIR = "host-function-metrics"
 PLOT_DIR = "out"
-
+OUTPUT_PATH = "host-function-results.csv"
 
 operations = [
     # Constant operations
@@ -54,19 +54,15 @@ operations = [
     WriteOperation(),
 ]
 
-# operations = [GetArgOperation()]
-
-
 if not os.path.exists(PLOT_DIR):
     os.makedirs(PLOT_DIR)
 
-# op1 = AddLocalOperation()
-# op1_param = op1.fit_parameters(
-#     "host-function-metrics/add_local.csv", 0.99, bounds=((0, 0), (np.inf, np.inf))
-# )
-# op1.plot_model_performance(
-#     op1_param, "host-function-metrics/add_local.csv", "data_op1.jpg",
-# )
+max_param = max([op.get_n_model_param() for op in operations])
+
+ofile = open(OUTPUT_PATH, "w")
+ofile.write("Name,Model,")
+ofile.write(",".join(["Param_%d_label,Param_%d_value"%(i+1,i+1) for i in range(max_param)]))
+ofile.write("\n")
 
 for op in operations:
     logging.info("Fitting model for operation: " + op.get_name())
@@ -84,9 +80,13 @@ for op in operations:
         op_param, data_file_path, plot_path, row_limit=ROW_LIMIT,
     )
 
-    input_arr, runtime_arr = parse_benchmark_result(data_file_path, row_limit=ROW_LIMIT)
+    ofile.write("\"%s\",\"%s\","%(op.get_name(), op.get_model_definition()))
+    labels = op.get_model_parameter_labels()
+    ofile.write(",".join(["\"%s\",%.6e"%(i,j) for i,j in zip(labels, op_param)]))
+    ofile.write("\n")
+    ofile.flush()
 
-    # import ipdb; ipdb.set_trace()
+    # input_arr, runtime_arr = parse_benchmark_result(data_file_path, row_limit=ROW_LIMIT)
     # plt.figure()
     # plt.scatter(input_arr[:,0], runtime_arr, marker='x')
     # plt.grid()
