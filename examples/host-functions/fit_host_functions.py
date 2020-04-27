@@ -1,7 +1,6 @@
 import os
 import logging
 
-from operation_benchmarking.plotting import plot_argumentless_operation
 from operation_benchmarking.helper import parse_benchmark_result
 from operation_benchmarking.operations.host_functions import *
 

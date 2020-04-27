@@ -18,3 +18,5 @@ Then, run
 ```
 python fit_host_functions.py
 ```
+
+This will generate plots in the `out` directory and also create parsable output in `host-function-results.csv`.
