@@ -1,10 +1,7 @@
 import numpy as np
-from operation_benchmarking import Operation
+from operation_benchmarking.operation import QuadraticOperation
 from .helper import randrange_logarithmic
 import random
-
-from operation_benchmarking.models import quadratic
-
 
 LOWER_LIMIT = 10
 UPPER_LIMIT = 1000
@@ -35,7 +32,7 @@ def selection_sort(collection):
     return collection
 
 
-class SelectionSortOperation(Operation):
+class SelectionSortOperation(QuadraticOperation):
     def execute(self, input_arr):
         return selection_sort(input_arr[0])
 
@@ -50,20 +47,13 @@ class SelectionSortOperation(Operation):
 
     def map_input(self, input_arr):
         a = input_arr[0]
-
         return (len(a),)
 
-    def runtime_model(self, param, x):
-        a, b, c = param
-        x_ = x[0]
+    def get_name(self):
+        return "Selection sort"
 
-        return a * x_ ** 2 + b * x_ + c
+    def get_model_variable_descriptions(self):
+        return ["Number of elements"]
 
-    def get_n_model_param(self):
-        return 3
-
-    def get_model_input_size(self):
-        return 1
-
-    def get_runtime_model(self):
-        return quadratic
+    def get_model_variable_units(self):
+        return ["-"]

@@ -54,6 +54,9 @@ operations = [
     WriteOperation(),
 ]
 
+# operations = [GetArgOperation()]
+
+
 if not os.path.exists(PLOT_DIR):
     os.makedirs(PLOT_DIR)
 
@@ -81,6 +84,11 @@ for op in operations:
         op_param, data_file_path, plot_path, row_limit=ROW_LIMIT,
     )
 
-    # input_arr, runtime_arr = parse_benchmark_result(data_file_path)
-    # plt.hist(runtime_arr)
+    input_arr, runtime_arr = parse_benchmark_result(data_file_path, row_limit=ROW_LIMIT)
+
+    # import ipdb; ipdb.set_trace()
+    # plt.figure()
+    # plt.scatter(input_arr[:,0], runtime_arr, marker='x')
+    # plt.grid()
+    # # plt.hist(runtime_arr)
     # plt.show()
