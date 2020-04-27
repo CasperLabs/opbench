@@ -4,9 +4,17 @@ import progressbar
 import pandas as pd
 import numpy as np
 
+from math import ceil
+
 from scipy.optimize import least_squares, fmin, fsolve
 
-from operation_benchmarking.fit import fit
+from operation_benchmarking.fit import fit, fit_constant
+from operation_benchmarking.models import constant, linear, quadratic
+from operation_benchmarking.plotting import (
+    plot_single_input_operation,
+    plot_argumentless_operation,
+)
+from operation_benchmarking.helper import parse_benchmark_result
 
 
 class Operation:
@@ -29,10 +37,28 @@ class Operation:
     def get_n_model_param(self):
         raise Exception("This should be implemented")
 
+    def get_constant_term_idx(self):
+        raise Exception("This should be implemented")
+
     def get_model_input_size(self):
         raise Exception("This should be implemented")
 
     def get_runtime_model(self):
+        raise Exception("This should be implemented")
+
+    def get_name(self):
+        raise Exception("This should be implemented")
+
+    def get_model_definition(self):
+        raise Exception("This should be implemented")
+
+    def get_model_parameter_labels(self):
+        raise Exception("This should be implemented")
+
+    def get_model_variable_descriptions(self):
+        raise Exception("This should be implemented")
+
+    def get_model_variable_units(self):
         raise Exception("This should be implemented")
 
     def batch_execute(self, n_executions, input_):
@@ -45,7 +71,7 @@ class Operation:
 
         bar = progressbar.ProgressBar(max_value=len(self.inputs))
 
-        ofile.write("time_vars,n_exec,elapsed_time\n")
+        ofile.write("args,n_exec,total_elapsed_time\n")
 
         for n, input_ in enumerate(self.inputs):
             start = time.time()
@@ -71,28 +97,125 @@ class Operation:
             # print(time_vars, elapsed_time)
         ofile.close()
 
-    def fit_parameters(self, benchmark_data_file, degree_of_confidence):
+    def fit_parameters(
+        self,
+        benchmark_data_file,
+        degree_of_confidence,
+        row_limit=None,
+        x0=None,
+        bounds=None,
+    ):
 
-        df = pd.read_csv(benchmark_data_file)
-        input_arr = df["time_vars"].to_list()
-        input_arr = [eval(i) for i in input_arr]
+        input_arr, runtime_arr = parse_benchmark_result(
+            benchmark_data_file, row_limit=row_limit
+        )
 
         n_model_param = self.get_n_model_param()
         model_input_size = self.get_model_input_size()
 
         assert False not in [len(i) == model_input_size for i in input_arr]
 
-        input_arr = np.array(input_arr)
-
-        runtime_arr = (df["elapsed_time"] / df["n_exec"]).to_numpy()
-
-        param = fit(
-            self.get_runtime_model(),
-            model_input_size,
-            n_model_param,
-            input_arr,
-            runtime_arr,
-            degree_of_confidence,
-        )
+        if model_input_size == 0:
+            param = (fit_constant(runtime_arr, degree_of_confidence),)
+        else:
+            param = fit(
+                self,
+                input_arr,
+                runtime_arr,
+                degree_of_confidence,
+                x0=x0,
+                bounds=bounds,
+            )
 
         return param
+
+    def plot_model_performance(self, param, data_file, output_file, row_limit=None):
+        if self.get_model_input_size() == 0:
+            plot_argumentless_operation(
+                self, param[0], data_file, output_file, row_limit=row_limit
+            )
+        elif self.get_model_input_size() == 1:
+            plot_single_input_operation(
+                self, param, data_file, output_file, row_limit=row_limit
+            )
+
+
+class LinearOperation(Operation):
+    def runtime_model(self, param, x):
+        a, b = param
+        x_ = x[0]
+
+        return a * x_ + b
+
+    def get_n_model_param(self):
+        return 2
+
+    def get_model_input_size(self):
+        return 1
+
+    def get_constant_term_idx(self):
+        return 1
+
+    def get_runtime_model(self):
+        return linear
+
+    def get_model_definition(self):
+        return "f(x) = a*x + b"
+
+    def get_model_parameter_labels(self):
+        return ["a", "b"]
+
+
+class QuadraticOperation(Operation):
+    def runtime_model(self, param, x):
+        a, b, c = param
+        x_ = x[0]
+
+        return a * x_ ** 2 + b * x_ + c
+
+    def get_n_model_param(self):
+        return 3
+
+    def get_model_input_size(self):
+        return 1
+
+    def get_constant_term_idx(self):
+        return 2
+
+    def get_runtime_model(self):
+        return quadratic
+
+    def get_model_definition(self):
+        return "f(x) = a*x^2 + b*x + c"
+
+    def get_model_parameter_labels(self):
+        return ["a", "b", "c"]
+
+
+class ConstantOperation(Operation):
+    def runtime_model(self, param, x):
+        return x[0]
+
+    def get_n_model_param(self):
+        return 1
+
+    def get_model_input_size(self):
+        return 0
+
+    def get_constant_term_idx(self):
+        return 0
+
+    def get_runtime_model(self):
+        return constant
+
+    def get_model_definition(self):
+        return "f(x) = c"
+
+    def get_model_parameter_labels(self):
+        return ["c"]
+
+    def get_model_variable_descriptions(self):
+        return []
+
+    def get_model_variable_units(self):
+        return []

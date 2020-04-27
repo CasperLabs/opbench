@@ -4,7 +4,7 @@ import hashlib  # hashlib is only used inside the Test class
 import unittest
 
 import numpy as np
-from operation_benchmarking import Operation
+from operation_benchmarking.operation import LinearOperation
 from .helper import randrange_logarithmic
 from random import randrange
 
@@ -111,7 +111,7 @@ class SHA1Hash:
         return "%08x%08x%08x%08x%08x" % tuple(self.h)
 
 
-class SHA1HashOperation(Operation):
+class SHA1HashOperation(LinearOperation):
     def execute(self, input_arr):
         return SHA1Hash(input_arr[0]).final_hash()
 
@@ -120,19 +120,17 @@ class SHA1HashOperation(Operation):
         # size = randrange_logarithmic(LOWER_LIMIT, UPPER_LIMIT)
 
         result = np.random.bytes(size)
-
         return (result,)
 
     def map_input(self, input_arr):
         a = input_arr[0]
-
         return (len(a),)
 
-    def get_n_model_param(self):
-        return 2
+    def get_name(self):
+        return "SHA1"
 
-    def get_model_input_size(self):
-        return 1
+    def get_model_variable_descriptions(self):
+        return ["Input size"]
 
-    def get_runtime_model(self):
-        return linear
+    def get_model_variable_units(self):
+        return ["byte"]
