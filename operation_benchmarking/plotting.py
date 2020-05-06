@@ -4,6 +4,7 @@ from scipy.optimize import least_squares, fmin, fsolve
 import numpy as np
 from operation_benchmarking.helper import parse_benchmark_result
 
+from operation_benchmarking.config import TIME_UNIT
 
 def plot_single_input_operation(
     operation, param, data_file, output_file, row_limit=None,
@@ -62,7 +63,7 @@ def plot_single_input_operation(
         + operation.get_model_variable_units()[0]
         + "]"
     )
-    plt.ylabel("Runtime [second]")
+    plt.ylabel("Runtime [%s]"%TIME_UNIT)
 
     plt.grid()
     plt.legend()
@@ -105,7 +106,7 @@ def plot_argumentless_operation(
     Points left: %d, Points right: %d, DoC: %.1f%%"
         % (operation.get_name(), len(y_left), len(y_right), ratio * 100,)
     )
-    plt.xlabel("Runtime [second]")
+    plt.xlabel("Runtime [%s]"%TIME_UNIT)
     plt.ylabel("Number of points")
 
     plt.xlim([max(0, mean - 4 * std), max(mean + 4 * std, constant)])

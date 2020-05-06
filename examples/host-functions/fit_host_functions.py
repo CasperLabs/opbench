@@ -60,7 +60,11 @@ max_param = max([op.get_n_model_param() for op in operations])
 
 ofile = open(OUTPUT_PATH, "w")
 ofile.write("Name,Model,")
-ofile.write(",".join(["Param_%d_label,Param_%d_value"%(i+1,i+1) for i in range(max_param)]))
+ofile.write(
+    ",".join(
+        ["Param_%d_label,Param_%d_value" % (i + 1, i + 1) for i in range(max_param)]
+    )
+)
 ofile.write("\n")
 
 for op in operations:
@@ -79,9 +83,9 @@ for op in operations:
         op_param, data_file_path, plot_path, row_limit=ROW_LIMIT,
     )
 
-    ofile.write("\"%s\",\"%s\","%(op.get_name(), op.get_model_definition()))
+    ofile.write('"%s","%s",' % (op.get_name(), op.get_model_definition()))
     labels = op.get_model_parameter_labels()
-    ofile.write(",".join(["\"%s\",%.6e"%(i,j) for i,j in zip(labels, op_param)]))
+    ofile.write(",".join(['"%s",%.6e' % (i, j) for i, j in zip(labels, op_param)]))
     ofile.write("\n")
     ofile.flush()
 

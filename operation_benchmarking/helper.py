@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 
+from operation_benchmarking.config import TIME_SCALE
 
 def parse_benchmark_result(
     csv_file_path, remove_outlier_sigma_count=5, row_limit=None,
@@ -37,5 +38,7 @@ def parse_benchmark_result(
         if len(runtime_arr) > row_limit:
             input_arr = input_arr[:row_limit, :]
             runtime_arr = runtime_arr[:row_limit]
+
+    runtime_arr = runtime_arr / TIME_SCALE
 
     return input_arr, runtime_arr

@@ -54,64 +54,68 @@ def fit(operation, input_arr, runtime_arr, degree_of_confidence, x0=None, bounds
     return param
 
 
-# def fit(runtime_model, n_input, n_param, input_arr, runtime_arr, degree_of_confidence, x0=None, bounds=None):
+def fit_alternative(operation, input_arr, runtime_arr, degree_of_confidence, x0=None, bounds=None):
 
-#     input_size = len(input_arr)
+    input_size = len(input_arr)
 
-#     if input_arr.dtype is not np.float64:
-#         input_arr = input_arr.astype(np.float64)
+    runtime_model = operation.get_runtime_model()
+    n_param = operation.get_n_model_param()
+    n_input = operation.get_model_input_size()
 
-#     if runtime_arr.dtype is not np.float64:
-#         runtime_arr = runtime_arr.astype(np.float64)
+    if input_arr.dtype is not np.float64:
+        input_arr = input_arr.astype(np.float64)
 
-#     if not x0:
-#         x0 = np.ones(n_param, dtype=np.float64)
+    if runtime_arr.dtype is not np.float64:
+        runtime_arr = runtime_arr.astype(np.float64)
 
-#     @cython.boundscheck(False)
-#     @cython.wraparound(False)
-#     def g(double[:] x, return_params=False):
-#         alpha = x[0]
+    if not x0:
+        x0 = np.ones(n_param, dtype=np.float64)
 
-#         @cython.boundscheck(False)
-#         @cython.wraparound(False)
-#         def f(double[:] param):
-#             # estimate = np.array([runtime_model(param, i) for i in input_arr])
-#             residual = runtime_model(param, input_arr)
+    @cython.boundscheck(False)
+    @cython.wraparound(False)
+    def g(double[:] x, return_params=False):
+        alpha = x[0]
 
-#             residual = residual - runtime_arr
-#             residual = modify_residual_vectorized(residual, alpha)
+        @cython.boundscheck(False)
+        @cython.wraparound(False)
+        def f(double[:] param):
+            # estimate = np.array([runtime_model(param, i) for i in input_arr])
+            residual = runtime_model(param, input_arr)
 
-#             return residual
+            residual = residual - runtime_arr
+            residual = modify_residual_vectorized(residual, alpha)
 
-#         if bounds:
-#             result = least_squares(f, x0, bounds=bounds, method="dogbox")
-#         else:
-#             result = least_squares(f, x0, method="dogbox")
+            return residual
 
-#         param = result.x
+        if bounds:
+            result = least_squares(f, x0, bounds=bounds, method="dogbox")
+        else:
+            result = least_squares(f, x0, method="dogbox")
 
-#         if return_params:
-#             return param
+        param = result.x
 
-#         runtime_result = runtime_model(param, input_arr)
+        if return_params:
+            return param
 
-#         below_arr = runtime_result >= runtime_arr
-#         below = np.count_nonzero(below_arr)
-#         above = len(below_arr) - below
+        runtime_result = runtime_model(param, input_arr)
 
-#         ratio = below / (above + below)
+        below_arr = runtime_result >= runtime_arr
+        below = np.count_nonzero(below_arr)
+        above = len(below_arr) - below
 
-#         outer_residual = ratio - degree_of_confidence
+        ratio = below / (above + below)
 
-#         logging.info('Residual: %.10f'%(abs(outer_residual)))
+        outer_residual = ratio - degree_of_confidence
 
-#         return outer_residual
+        logging.info('Residual: %.10f'%(abs(outer_residual)))
 
-#     # result = fmin(g, [1])
-#     result = fsolve(g, [1.])
-#     param = g(result, return_params=True)
+        return outer_residual
 
-#     return param
+    # result = fmin(g, [1])
+    result = fsolve(g, [1.])
+    param = g(result, return_params=True)
+
+    return param
 
 
 def fit_constant(double[:] runtime_arr, degree_of_confidence):
