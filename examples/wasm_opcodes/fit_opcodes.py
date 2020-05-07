@@ -4,56 +4,35 @@ import logging
 import numpy as np
 
 from operation_benchmarking.helper import parse_benchmark_result
-from operation_benchmarking.operations.host_functions import *
+# from operation_benchmarking.operations.host_functions import *
+from operation_benchmarking.operations import wasm_opcodes as opcode_module
+from operation_benchmarking.operation import Operation
 
 import matplotlib.pyplot as plt
 
 logging.basicConfig(level=logging.INFO)
 
 
-DEGREE_OF_CONFIDENCE = 0.99
+DEGREE_OF_CONFIDENCE = 0.999
 ROW_LIMIT = 10_000
-DATA_DIR = "host-function-metrics"
+DATA_DIR = "opcode-metrics"
 PLOT_DIR = "out"
-OUTPUT_PATH = "host-function-results.csv"
+OUTPUT_PATH = "opcode-results.csv"
 
-operations = [
-    # Constant operations
-    AddAssociatedKeyOperation(),
-    AddOperation(),
-    CreatePurseOperation(),
-    GetArgSizeOperation(),
-    GetBalanceOperation(),
-    GetBlocktimeOperation(),
-    GetCallerOperation(),
-    GetMainPurseOperation(),
-    GetPhaseOperation(),
-    GetSystemContractOperation(),
-    IsValidUrefOperation(),
-    ReadValueOperation(),
-    RemoveAssociatedKeyOperation(),
-    RevertOperation(),
-    SetActionThresholdOperation(),
-    TransferFromPurseToAccountOperation(),
-    TransferFromPurseToPurseOperation(),
-    TransferToAccountOperation(),
-    UpdateAssociatedKeyOperation(),
-    # Linear operations
-    AddLocalOperation(),
-    CallContractOperation(),
-    GetArgOperation(),
-    GetKeyOperation(),
-    HasKeyOperation(),
-    LoadNamedKeysOperation(),
-    NewUrefOperation(),
-    PrintOperation(),
-    PutKeyOperation(),
-    ReadHostBufferOperation(),
-    ReadValueLocalOperation(),
-    RemoveKeyOperation(),
-    RetOperation(),
-    WriteOperation(),
-]
+operations = []
+for i in vars(opcode_module).values():
+    if not isinstance(i, type):
+        continue
+
+    try:
+        i().get_name()
+    except:
+        continue
+
+    if issubclass(i, Operation):
+        operations.append(i())
+
+# import ipdb; ipdb.set_trace()
 
 if not os.path.exists(PLOT_DIR):
     os.makedirs(PLOT_DIR)
@@ -71,14 +50,19 @@ ofile.write("\n")
 
 for op in operations:
     logging.info("Fitting model for operation: " + op.get_name())
-    data_file_path = os.path.join(DATA_DIR, op.get_name() + ".csv")
+    data_file_name = op.get_name() + ".csv"
+    data_file_path = os.path.join(DATA_DIR, data_file_name)
     plot_path = os.path.join(PLOT_DIR, op.get_name() + ".jpg")
+
+    if not os.path.exists(data_file_path):
+        logging.warning("Benchmark data file for %s does not exist in directory %s, skipping"%(op.get_name(), DATA_DIR))
+        continue
 
     n_param = op.get_n_model_param()
     bounds = [[0 for i in range(n_param)], [np.inf for i in range(n_param)]]
 
     op_param = op.fit_parameters(
-        data_file_path, DEGREE_OF_CONFIDENCE, row_limit=ROW_LIMIT, bounds=bounds,
+        data_file_path, DEGREE_OF_CONFIDENCE, row_limit=ROW_LIMIT, bounds=bounds, ignore_input_mismatch=True,
     )
 
     op.plot_model_performance(

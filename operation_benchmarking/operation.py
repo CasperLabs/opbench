@@ -104,6 +104,7 @@ class Operation:
         row_limit=None,
         x0=None,
         bounds=None,
+        ignore_input_mismatch=False,
     ):
 
         input_arr, runtime_arr = parse_benchmark_result(
@@ -113,7 +114,8 @@ class Operation:
         n_model_param = self.get_n_model_param()
         model_input_size = self.get_model_input_size()
 
-        assert False not in [len(i) == model_input_size for i in input_arr]
+        if False in [len(i) == model_input_size for i in input_arr] and not ignore_input_mismatch:
+            raise Exception("Number of arguments in data file does not match operation definition")
 
         if model_input_size == 0:
             param = (fit_constant(runtime_arr, degree_of_confidence),)
