@@ -13,11 +13,12 @@ import matplotlib.pyplot as plt
 logging.basicConfig(level=logging.INFO)
 
 
-DEGREE_OF_CONFIDENCE = 0.999
+DEGREE_OF_CONFIDENCE = 0.99
 ROW_LIMIT = 10_000
 DATA_DIR = "opcode-metrics"
 PLOT_DIR = "out"
 OUTPUT_PATH = "opcode-results.csv"
+SKIPPED_PATH = "skipped.txt"
 
 operations = []
 for i in vars(opcode_module).values():
@@ -39,6 +40,8 @@ if not os.path.exists(PLOT_DIR):
 
 max_param = max([op.get_n_model_param() for op in operations])
 
+skipped_ofile = open(SKIPPED_PATH, "w")
+
 ofile = open(OUTPUT_PATH, "w")
 ofile.write("Name,Model,")
 ofile.write(
@@ -56,6 +59,7 @@ for op in operations:
 
     if not os.path.exists(data_file_path):
         logging.warning("Benchmark data file for %s does not exist in directory %s, skipping"%(op.get_name(), DATA_DIR))
+        skipped_ofile.write("%s\n"%(op.get_name()))
         continue
 
     n_param = op.get_n_model_param()

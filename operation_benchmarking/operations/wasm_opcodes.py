@@ -11,7 +11,8 @@ OPCODE_NAMES = [
     "Else",
     "End",
     "Br",
-    "BrIf",
+    "BrIfEqz",
+    "BrIfNez",
     "BrTable",
     "Return",
     "Call",
@@ -217,9 +218,14 @@ class BrOperation(ConstantOperation):
         return "Br"
 
 
-class BrIfOperation(ConstantOperation):
+class BrIfEqzOperation(ConstantOperation):
     def get_name(self):
-        return "BrIf"
+        return "BrIfEqz"
+
+
+class BrIfNezOperation(ConstantOperation):
+    def get_name(self):
+        return "BrIfNez"
 
 
 class BrTableOperation(ConstantOperation):
