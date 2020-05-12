@@ -1,0 +1,878 @@
+[config]
+data_dir = "opcode-metrics"
+plot_output_dir = "out"
+degree_of_confidence = 0.99
+row_limit = 10000
+csv_output_path = "host-function-results.csv"
+log_path = "log.txt"
+
+
+[[operation]]
+name = "Unreachable"
+type = "constant"
+
+
+# [[operation]]
+# name = "Nop"
+# type = "constant"
+
+
+# [[operation]]
+# name = "Block"
+# type = "constant"
+
+
+# [[operation]]
+# name = "Loop"
+# type = "constant"
+
+
+# [[operation]]
+# name = "If"
+# type = "constant"
+
+
+# [[operation]]
+# name = "Else"
+# type = "constant"
+
+
+# [[operation]]
+# name = "End"
+# type = "constant"
+
+
+[[operation]]
+name = "Br"
+type = "constant"
+used_arg_indices = []
+
+
+[[operation]]
+name = "BrIfEqz"
+type = "constant"
+used_arg_indices = []
+
+
+[[operation]]
+name = "BrIfNez"
+type = "constant"
+used_arg_indices = []
+
+
+[[operation]]
+name = "BrTable"
+type = "constant"
+
+
+[[operation]]
+name = "Return"
+type = "constant"
+used_arg_indices = []
+
+
+[[operation]]
+name = "Call"
+type = "constant"
+
+
+[[operation]]
+name = "CallIndirect"
+type = "constant"
+
+
+[[operation]]
+name = "Drop"
+type = "constant"
+
+
+[[operation]]
+name = "Select"
+type = "constant"
+
+
+[[operation]]
+name = "GetLocal"
+type = "constant"
+
+
+[[operation]]
+name = "SetLocal"
+type = "constant"
+
+
+[[operation]]
+name = "TeeLocal"
+type = "constant"
+
+
+[[operation]]
+name = "GetGlobal"
+type = "constant"
+
+
+[[operation]]
+name = "SetGlobal"
+type = "constant"
+
+
+[[operation]]
+name = "I32Load"
+type = "constant"
+
+
+[[operation]]
+name = "I64Load"
+type = "constant"
+
+
+# [[operation]]
+# name = "F32Load"
+# type = "constant"
+
+
+# [[operation]]
+# name = "F64Load"
+# type = "constant"
+
+
+[[operation]]
+name = "I32Load8S"
+type = "constant"
+
+
+[[operation]]
+name = "I32Load8U"
+type = "constant"
+
+
+[[operation]]
+name = "I32Load16S"
+type = "constant"
+
+
+[[operation]]
+name = "I32Load16U"
+type = "constant"
+
+
+[[operation]]
+name = "I64Load8S"
+type = "constant"
+
+
+[[operation]]
+name = "I64Load8U"
+type = "constant"
+
+
+[[operation]]
+name = "I64Load16S"
+type = "constant"
+
+
+[[operation]]
+name = "I64Load16U"
+type = "constant"
+
+
+[[operation]]
+name = "I64Load32S"
+type = "constant"
+
+
+[[operation]]
+name = "I64Load32U"
+type = "constant"
+
+
+[[operation]]
+name = "I32Store"
+type = "constant"
+
+
+[[operation]]
+name = "I64Store"
+type = "constant"
+
+
+# [[operation]]
+# name = "F32Store"
+# type = "constant"
+
+
+# [[operation]]
+# name = "F64Store"
+# type = "constant"
+
+
+[[operation]]
+name = "I32Store8"
+type = "constant"
+
+
+[[operation]]
+name = "I32Store16"
+type = "constant"
+
+
+[[operation]]
+name = "I64Store8"
+type = "constant"
+
+
+[[operation]]
+name = "I64Store16"
+type = "constant"
+
+
+[[operation]]
+name = "I64Store32"
+type = "constant"
+
+
+[[operation]]
+name = "CurrentMemory"
+type = "constant"
+
+
+[[operation]]
+name = "GrowMemory"
+type = "constant"
+
+
+[[operation]]
+name = "I32Const"
+type = "constant"
+
+
+[[operation]]
+name = "I64Const"
+type = "constant"
+
+
+# [[operation]]
+# name = "F32Const"
+# type = "constant"
+
+
+# [[operation]]
+# name = "F64Const"
+# type = "constant"
+
+
+[[operation]]
+name = "I32Eqz"
+type = "constant"
+
+
+[[operation]]
+name = "I32Eq"
+type = "constant"
+
+
+[[operation]]
+name = "I32Ne"
+type = "constant"
+
+
+[[operation]]
+name = "I32LtS"
+type = "constant"
+
+
+[[operation]]
+name = "I32LtU"
+type = "constant"
+
+
+[[operation]]
+name = "I32GtS"
+type = "constant"
+
+
+[[operation]]
+name = "I32GtU"
+type = "constant"
+
+
+[[operation]]
+name = "I32LeS"
+type = "constant"
+
+
+[[operation]]
+name = "I32LeU"
+type = "constant"
+
+
+[[operation]]
+name = "I32GeS"
+type = "constant"
+
+
+[[operation]]
+name = "I32GeU"
+type = "constant"
+
+
+[[operation]]
+name = "I64Eqz"
+type = "constant"
+
+
+[[operation]]
+name = "I64Eq"
+type = "constant"
+
+
+[[operation]]
+name = "I64Ne"
+type = "constant"
+
+
+[[operation]]
+name = "I64LtS"
+type = "constant"
+
+
+[[operation]]
+name = "I64LtU"
+type = "constant"
+
+
+[[operation]]
+name = "I64GtS"
+type = "constant"
+
+
+[[operation]]
+name = "I64GtU"
+type = "constant"
+
+
+[[operation]]
+name = "I64LeS"
+type = "constant"
+
+
+[[operation]]
+name = "I64LeU"
+type = "constant"
+
+
+[[operation]]
+name = "I64GeS"
+type = "constant"
+
+
+[[operation]]
+name = "I64GeU"
+type = "constant"
+
+
+# [[operation]]
+# name = "F32Eq"
+# type = "constant"
+
+
+# [[operation]]
+# name = "F32Ne"
+# type = "constant"
+
+
+# [[operation]]
+# name = "F32Lt"
+# type = "constant"
+
+
+# [[operation]]
+# name = "F32Gt"
+# type = "constant"
+
+
+# [[operation]]
+# name = "F32Le"
+# type = "constant"
+
+
+# [[operation]]
+# name = "F32Ge"
+# type = "constant"
+
+
+# [[operation]]
+# name = "F64Eq"
+# type = "constant"
+
+
+# [[operation]]
+# name = "F64Ne"
+# type = "constant"
+
+
+# [[operation]]
+# name = "F64Lt"
+# type = "constant"
+
+
+# [[operation]]
+# name = "F64Gt"
+# type = "constant"
+
+
+# [[operation]]
+# name = "F64Le"
+# type = "constant"
+
+
+# [[operation]]
+# name = "F64Ge"
+# type = "constant"
+
+
+[[operation]]
+name = "I32Clz"
+type = "constant"
+
+
+[[operation]]
+name = "I32Ctz"
+type = "constant"
+
+
+[[operation]]
+name = "I32Popcnt"
+type = "constant"
+
+
+[[operation]]
+name = "I32Add"
+type = "constant"
+
+
+[[operation]]
+name = "I32Sub"
+type = "constant"
+
+
+[[operation]]
+name = "I32Mul"
+type = "constant"
+
+
+[[operation]]
+name = "I32DivS"
+type = "constant"
+
+
+[[operation]]
+name = "I32DivU"
+type = "constant"
+
+
+[[operation]]
+name = "I32RemS"
+type = "constant"
+
+
+[[operation]]
+name = "I32RemU"
+type = "constant"
+
+
+[[operation]]
+name = "I32And"
+type = "constant"
+
+
+[[operation]]
+name = "I32Or"
+type = "constant"
+
+
+[[operation]]
+name = "I32Xor"
+type = "constant"
+
+
+[[operation]]
+name = "I32Shl"
+type = "constant"
+
+
+[[operation]]
+name = "I32ShrS"
+type = "constant"
+
+
+[[operation]]
+name = "I32ShrU"
+type = "constant"
+
+
+[[operation]]
+name = "I32Rotl"
+type = "constant"
+
+
+[[operation]]
+name = "I32Rotr"
+type = "constant"
+
+
+[[operation]]
+name = "I64Clz"
+type = "constant"
+
+
+[[operation]]
+name = "I64Ctz"
+type = "constant"
+
+
+[[operation]]
+name = "I64Popcnt"
+type = "constant"
+
+
+[[operation]]
+name = "I64Add"
+type = "constant"
+
+
+[[operation]]
+name = "I64Sub"
+type = "constant"
+
+
+[[operation]]
+name = "I64Mul"
+type = "constant"
+
+
+[[operation]]
+name = "I64DivS"
+type = "constant"
+
+
+[[operation]]
+name = "I64DivU"
+type = "constant"
+
+
+[[operation]]
+name = "I64RemS"
+type = "constant"
+
+
+[[operation]]
+name = "I64RemU"
+type = "constant"
+
+
+[[operation]]
+name = "I64And"
+type = "constant"
+
+
+[[operation]]
+name = "I64Or"
+type = "constant"
+
+
+[[operation]]
+name = "I64Xor"
+type = "constant"
+
+
+[[operation]]
+name = "I64Shl"
+type = "constant"
+
+
+[[operation]]
+name = "I64ShrS"
+type = "constant"
+
+
+[[operation]]
+name = "I64ShrU"
+type = "constant"
+
+
+[[operation]]
+name = "I64Rotl"
+type = "constant"
+
+
+[[operation]]
+name = "I64Rotr"
+type = "constant"
+
+
+# [[operation]]
+# name = "F32Abs"
+# type = "constant"
+
+
+# [[operation]]
+# name = "F32Neg"
+# type = "constant"
+
+
+# [[operation]]
+# name = "F32Ceil"
+# type = "constant"
+
+
+# [[operation]]
+# name = "F32Floor"
+# type = "constant"
+
+
+# [[operation]]
+# name = "F32Trunc"
+# type = "constant"
+
+
+# [[operation]]
+# name = "F32Nearest"
+# type = "constant"
+
+
+# [[operation]]
+# name = "F32Sqrt"
+# type = "constant"
+
+
+# [[operation]]
+# name = "F32Add"
+# type = "constant"
+
+
+# [[operation]]
+# name = "F32Sub"
+# type = "constant"
+
+
+# [[operation]]
+# name = "F32Mul"
+# type = "constant"
+
+
+# [[operation]]
+# name = "F32Div"
+# type = "constant"
+
+
+# [[operation]]
+# name = "F32Min"
+# type = "constant"
+
+
+# [[operation]]
+# name = "F32Max"
+# type = "constant"
+
+
+# [[operation]]
+# name = "F32Copysign"
+# type = "constant"
+
+
+# [[operation]]
+# name = "F64Abs"
+# type = "constant"
+
+
+# [[operation]]
+# name = "F64Neg"
+# type = "constant"
+
+
+# [[operation]]
+# name = "F64Ceil"
+# type = "constant"
+
+
+# [[operation]]
+# name = "F64Floor"
+# type = "constant"
+
+
+# [[operation]]
+# name = "F64Trunc"
+# type = "constant"
+
+
+# [[operation]]
+# name = "F64Nearest"
+# type = "constant"
+
+
+# [[operation]]
+# name = "F64Sqrt"
+# type = "constant"
+
+
+# [[operation]]
+# name = "F64Add"
+# type = "constant"
+
+
+# [[operation]]
+# name = "F64Sub"
+# type = "constant"
+
+
+# [[operation]]
+# name = "F64Mul"
+# type = "constant"
+
+
+# [[operation]]
+# name = "F64Div"
+# type = "constant"
+
+
+# [[operation]]
+# name = "F64Min"
+# type = "constant"
+
+
+# [[operation]]
+# name = "F64Max"
+# type = "constant"
+
+
+# [[operation]]
+# name = "F64Copysign"
+# type = "constant"
+
+
+[[operation]]
+name = "I32WrapI64"
+type = "constant"
+
+
+# [[operation]]
+# name = "I32TruncSF32"
+# type = "constant"
+
+
+# [[operation]]
+# name = "I32TruncUF32"
+# type = "constant"
+
+
+# [[operation]]
+# name = "I32TruncSF64"
+# type = "constant"
+
+
+# [[operation]]
+# name = "I32TruncUF64"
+# type = "constant"
+
+
+[[operation]]
+name = "I64ExtendSI32"
+type = "constant"
+
+
+[[operation]]
+name = "I64ExtendUI32"
+type = "constant"
+
+
+# [[operation]]
+# name = "I64TruncSF32"
+# type = "constant"
+
+
+# [[operation]]
+# name = "I64TruncUF32"
+# type = "constant"
+
+
+# [[operation]]
+# name = "I64TruncSF64"
+# type = "constant"
+
+
+# [[operation]]
+# name = "I64TruncUF64"
+# type = "constant"
+
+
+# [[operation]]
+# name = "F32ConvertSI32"
+# type = "constant"
+
+
+# [[operation]]
+# name = "F32ConvertUI32"
+# type = "constant"
+
+
+# [[operation]]
+# name = "F32ConvertSI64"
+# type = "constant"
+
+
+# [[operation]]
+# name = "F32ConvertUI64"
+# type = "constant"
+
+
+# [[operation]]
+# name = "F32DemoteF64"
+# type = "constant"
+
+
+# [[operation]]
+# name = "F64ConvertSI32"
+# type = "constant"
+
+
+# [[operation]]
+# name = "F64ConvertUI32"
+# type = "constant"
+
+
+# [[operation]]
+# name = "F64ConvertSI64"
+# type = "constant"
+
+
+# [[operation]]
+# name = "F64ConvertUI64"
+# type = "constant"
+
+
+# [[operation]]
+# name = "F64PromoteF32"
+# type = "constant"
+
+
+# [[operation]]
+# name = "I32ReinterpretF32"
+# type = "constant"
+
+
+# [[operation]]
+# name = "I64ReinterpretF64"
+# type = "constant"
+
+
+# [[operation]]
+# name = "F32ReinterpretI32"
+# type = "constant"
+
+
+# [[operation]]
+# name = "F64ReinterpretI64"
+# type = "constant"
+
+
