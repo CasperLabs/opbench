@@ -4,6 +4,7 @@ import logging
 import numpy as np
 
 from operation_benchmarking.helper import parse_benchmark_result
+
 # from operation_benchmarking.operations.host_functions import *
 from operation_benchmarking.operations import wasm_opcodes as opcode_module
 from operation_benchmarking.operation import Operation
@@ -58,15 +59,22 @@ for op in operations:
     plot_path = os.path.join(PLOT_DIR, op.get_name() + ".jpg")
 
     if not os.path.exists(data_file_path):
-        logging.warning("Benchmark data file for %s does not exist in directory %s, skipping"%(op.get_name(), DATA_DIR))
-        skipped_ofile.write("%s\n"%(op.get_name()))
+        logging.warning(
+            "Benchmark data file for %s does not exist in directory %s, skipping"
+            % (op.get_name(), DATA_DIR)
+        )
+        skipped_ofile.write("%s\n" % (op.get_name()))
         continue
 
     n_param = op.get_n_model_param()
     bounds = [[0 for i in range(n_param)], [np.inf for i in range(n_param)]]
 
     op_param = op.fit_parameters(
-        data_file_path, DEGREE_OF_CONFIDENCE, row_limit=ROW_LIMIT, bounds=bounds, ignore_input_mismatch=True,
+        data_file_path,
+        DEGREE_OF_CONFIDENCE,
+        row_limit=ROW_LIMIT,
+        bounds=bounds,
+        ignore_input_mismatch=True,
     )
 
     op.plot_model_performance(

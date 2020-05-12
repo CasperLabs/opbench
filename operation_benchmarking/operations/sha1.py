@@ -4,7 +4,7 @@ import hashlib  # hashlib is only used inside the Test class
 import unittest
 
 import numpy as np
-from operation_benchmarking.operation import LinearOperation
+from operation_benchmarking.types import LinearOperation
 from .helper import randrange_logarithmic
 from random import randrange
 

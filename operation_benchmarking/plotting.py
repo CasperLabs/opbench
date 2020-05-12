@@ -6,13 +6,14 @@ from operation_benchmarking.helper import parse_benchmark_result
 
 from operation_benchmarking.config import TIME_UNIT
 
+
 def plot_single_input_operation(
-    operation, param, data_file, output_file, row_limit=None,
+    operation, param, data_file, output_file, row_limit=None, used_arg_indices=None
 ):
 
     assert operation.get_model_input_size() == 1
 
-    input_arr, runtime_arr = parse_benchmark_result(data_file, row_limit=row_limit)
+    input_arr, runtime_arr = parse_benchmark_result(data_file, row_limit=row_limit, used_arg_indices=used_arg_indices)
 
     model = operation.get_runtime_model()
 
@@ -63,7 +64,7 @@ def plot_single_input_operation(
         + operation.get_model_variable_units()[0]
         + "]"
     )
-    plt.ylabel("Runtime [%s]"%TIME_UNIT)
+    plt.ylabel("Runtime [%s]" % TIME_UNIT)
 
     plt.grid()
     plt.legend()
@@ -73,12 +74,12 @@ def plot_single_input_operation(
 
 
 def plot_argumentless_operation(
-    operation, constant, data_file, output_file, row_limit=None,
+    operation, constant, data_file, output_file, row_limit=None, used_arg_indices=None
 ):
 
     assert operation.get_model_input_size() == 0
 
-    input_arr, runtime_arr = parse_benchmark_result(data_file, row_limit=row_limit)
+    input_arr, runtime_arr = parse_benchmark_result(data_file, row_limit=row_limit, used_arg_indices=used_arg_indices)
 
     mean = np.mean(runtime_arr)
     std = np.std(runtime_arr)
@@ -106,7 +107,7 @@ def plot_argumentless_operation(
     Points left: %d, Points right: %d, DoC: %.1f%%"
         % (operation.get_name(), len(y_left), len(y_right), ratio * 100,)
     )
-    plt.xlabel("Runtime [%s]"%TIME_UNIT)
+    plt.xlabel("Runtime [%s]" % TIME_UNIT)
     plt.ylabel("Number of points")
 
     plt.xlim([max(0, mean - 4 * std), max(mean + 4 * std, constant)])

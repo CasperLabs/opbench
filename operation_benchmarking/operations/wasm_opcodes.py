@@ -178,6 +178,7 @@ OPCODE_NAMES = [
     "F64ReinterpretI64",
 ]
 
+
 class UnreachableOperation(ConstantOperation):
     def get_name(self):
         return "Unreachable"
@@ -1041,4 +1042,3 @@ class F32ReinterpretI32Operation(ConstantOperation):
 class F64ReinterpretI64Operation(ConstantOperation):
     def get_name(self):
         return "F64ReinterpretI64"
-

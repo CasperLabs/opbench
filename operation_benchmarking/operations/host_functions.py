@@ -1,6 +1,6 @@
 import numpy as np
 
-from operation_benchmarking.operation import ConstantOperation, LinearOperation
+from operation_benchmarking.types import ConstantOperation, LinearOperation
 from operation_benchmarking.models import constant, linear, quadratic
 
 # Constant operations

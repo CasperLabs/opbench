@@ -20,6 +20,11 @@ from operation_benchmarking.helper import parse_benchmark_result
 class Operation:
     def __init__(self):
         self.inputs = []
+        self.model_definition = None
+        self.model_parameter_labels = None
+        self.model_variable_descriptions = None
+        self.model_variable_units = None
+        self.name = None
 
     def generate_inputs(self, n_input):
         for i in range(n_input):
@@ -46,20 +51,60 @@ class Operation:
     def get_runtime_model(self):
         raise Exception("This should be implemented")
 
+    def set_name(self, name):
+        self.name = name
+
+    def set_model_definition(self, model_definition):
+        self.model_definition = model_definition
+
+    def set_model_parameter_labels(self, model_parameter_labels):
+        self.model_parameter_labels = model_parameter_labels
+
+    def set_model_variable_descriptions(self, model_variable_descriptions):
+        self.model_variable_descriptions = model_variable_descriptions
+
+    def set_model_variable_units(self, model_variable_units):
+        self.model_variable_units = model_variable_units
+
     def get_name(self):
-        raise Exception("This should be implemented")
+        if self.name is not None:
+            return self.name
+        else:
+            raise Exception(
+                "The variable should be set, or the method should be overridden"
+            )
 
     def get_model_definition(self):
-        raise Exception("This should be implemented")
+        if self.model_definition is not None:
+            return self.model_definition
+        else:
+            raise Exception(
+                "The variable should be set, or the method should be overridden"
+            )
 
     def get_model_parameter_labels(self):
-        raise Exception("This should be implemented")
+        if self.model_parameter_labels is not None:
+            return self.model_parameter_labels
+        else:
+            raise Exception(
+                "The variable should be set, or the method should be overridden"
+            )
 
     def get_model_variable_descriptions(self):
-        raise Exception("This should be implemented")
+        if self.model_variable_descriptions is not None:
+            return self.model_variable_descriptions
+        else:
+            raise Exception(
+                "The variable should be set, or the method should be overridden"
+            )
 
     def get_model_variable_units(self):
-        raise Exception("This should be implemented")
+        if self.model_variable_units is not None:
+            return self.model_variable_units
+        else:
+            raise Exception(
+                "The variable should be set, or the method should be overridden"
+            )
 
     def batch_execute(self, n_executions, input_):
         for i in range(n_executions):
@@ -104,18 +149,20 @@ class Operation:
         row_limit=None,
         x0=None,
         bounds=None,
-        ignore_input_mismatch=False,
+        used_arg_indices=None,
     ):
 
         input_arr, runtime_arr = parse_benchmark_result(
-            benchmark_data_file, row_limit=row_limit
+            benchmark_data_file, row_limit=row_limit, used_arg_indices=used_arg_indices
         )
 
         n_model_param = self.get_n_model_param()
         model_input_size = self.get_model_input_size()
 
-        if False in [len(i) == model_input_size for i in input_arr] and not ignore_input_mismatch:
-            raise Exception("Number of arguments in data file does not match operation definition")
+        if False in [len(i) == model_input_size for i in input_arr]:
+            raise Exception(
+                "Number of arguments in data file does not match operation definition"
+            )
 
         if model_input_size == 0:
             param = (fit_constant(runtime_arr, degree_of_confidence),)
@@ -131,93 +178,12 @@ class Operation:
 
         return param
 
-    def plot_model_performance(self, param, data_file, output_file, row_limit=None):
+    def plot_model_performance(self, param, data_file, output_file, row_limit=None, used_arg_indices=None):
         if self.get_model_input_size() == 0:
             plot_argumentless_operation(
-                self, param[0], data_file, output_file, row_limit=row_limit
+                self, param[0], data_file, output_file, row_limit=row_limit, used_arg_indices=used_arg_indices
             )
         elif self.get_model_input_size() == 1:
             plot_single_input_operation(
-                self, param, data_file, output_file, row_limit=row_limit
+                self, param, data_file, output_file, row_limit=row_limit, used_arg_indices=used_arg_indices
             )
-
-
-class LinearOperation(Operation):
-    def runtime_model(self, param, x):
-        a, b = param
-        x_ = x[0]
-
-        return a * x_ + b
-
-    def get_n_model_param(self):
-        return 2
-
-    def get_model_input_size(self):
-        return 1
-
-    def get_constant_term_idx(self):
-        return 1
-
-    def get_runtime_model(self):
-        return linear
-
-    def get_model_definition(self):
-        return "f(x) = a*x + b"
-
-    def get_model_parameter_labels(self):
-        return ["a", "b"]
-
-
-class QuadraticOperation(Operation):
-    def runtime_model(self, param, x):
-        a, b, c = param
-        x_ = x[0]
-
-        return a * x_ ** 2 + b * x_ + c
-
-    def get_n_model_param(self):
-        return 3
-
-    def get_model_input_size(self):
-        return 1
-
-    def get_constant_term_idx(self):
-        return 2
-
-    def get_runtime_model(self):
-        return quadratic
-
-    def get_model_definition(self):
-        return "f(x) = a*x^2 + b*x + c"
-
-    def get_model_parameter_labels(self):
-        return ["a", "b", "c"]
-
-
-class ConstantOperation(Operation):
-    def runtime_model(self, param, x):
-        return x[0]
-
-    def get_n_model_param(self):
-        return 1
-
-    def get_model_input_size(self):
-        return 0
-
-    def get_constant_term_idx(self):
-        return 0
-
-    def get_runtime_model(self):
-        return constant
-
-    def get_model_definition(self):
-        return "f(x) = c"
-
-    def get_model_parameter_labels(self):
-        return ["c"]
-
-    def get_model_variable_descriptions(self):
-        return []
-
-    def get_model_variable_units(self):
-        return []
