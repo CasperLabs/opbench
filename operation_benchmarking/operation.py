@@ -152,9 +152,28 @@ class Operation:
         used_arg_indices=None,
     ):
 
-        input_arr, runtime_arr = parse_benchmark_result(
-            benchmark_data_file, row_limit=row_limit, used_arg_indices=used_arg_indices
-        )
+        if isinstance(benchmark_data_file, str):
+            input_arr, runtime_arr = parse_benchmark_result(
+                benchmark_data_file, row_limit=row_limit, used_arg_indices=used_arg_indices
+            )
+        elif isinstance(benchmark_data_file, list):
+            if len(benchmark_data_file) == 0:
+                raise Exception("Received empty list")
+
+            input_arr_ = []
+            runtime_arr_ = []
+
+            for path in benchmark_data_file:
+                input_arr, runtime_arr = parse_benchmark_result(
+                    path, row_limit=row_limit, used_arg_indices=used_arg_indices
+                )
+                input_arr_.append(input_arr)
+                runtime_arr_.append(runtime_arr)
+
+            input_arr = np.concatenate(input_arr_)
+            runtime_arr = np.concatenate(runtime_arr_)
+        else:
+            raise Exception("Invalid argument")
 
         n_model_param = self.get_n_model_param()
         model_input_size = self.get_model_input_size()

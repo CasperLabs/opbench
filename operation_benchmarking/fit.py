@@ -66,4 +66,7 @@ def fit_constant(runtime_arr, degree_of_confidence):
 
     result = lower_bound + (upper_bound - lower_bound) * (lower_weight) / (lower_weight + upper_weight)
 
+    # print(runtime_arr.shape, runtime_arr[-10:])
+    # print(idx, result, degree_of_confidence)
+
     return result

@@ -3,6 +3,7 @@ import argparse
 import toml
 import traceback
 import logging
+import copy
 
 import numpy as np
 
@@ -27,10 +28,14 @@ def main():
 
     degree_of_confidence = config_dict["degree_of_confidence"]
     row_limit = config_dict["row_limit"]
-    data_dir = os.path.join(base_dir, config_dict["data_dir"])
     plot_output_dir = os.path.join(base_dir, config_dict["plot_output_dir"])
     csv_output_dir = os.path.join(base_dir, config_dict["csv_output_path"])
     log_path = os.path.join(base_dir, config_dict["log_path"])
+
+    if isinstance(config_dict["data_dir"], str):
+        data_dir_list = [os.path.join(base_dir, config_dict["data_dir"])]
+    elif isinstance(config_dict["data_dir"], list):
+        data_dir_list = [os.path.join(base_dir, i) for i in config_dict["data_dir"]]
 
     operations = []
 
@@ -78,32 +83,44 @@ def main():
             used_arg_indices = None
 
         logging.info("Fitting model for operation: " + op.get_name())
-        data_file_name = op.get_name() + ".csv"
-        data_file_path = os.path.join(data_dir, data_file_name)
-        plot_path = os.path.join(plot_output_dir, op.get_name() + ".jpg")
 
-        if not os.path.exists(data_file_path):
-            logging.warning(
-                "Benchmark data file for %s does not exist in directory %s, skipping"
-                % (op.get_name(), data_dir)
-            )
+        data_file_name = op.get_name() + ".csv"
+        data_file_path_list = [os.path.join(i, data_file_name) for i in data_dir_list]
+
+        for path in copy.deepcopy(data_file_path_list):
+            if not os.path.exists(path):
+
+                logging.warning(
+                    "Benchmark data file for %s does not exist in directory %s"
+                    % (op.get_name(), os.path.dirname(path))
+                )
+                data_file_path_list.remove(path)
+
+        if len(data_file_path_list) == 0:
             skipped_ofile.write("%s\n" % (op.get_name()))
             continue
+
+        # Adjust degree of confidence based on the number of input files
+        adjusted_degree_of_confidence = 1 - (1 - degree_of_confidence)/len(data_file_path_list)
 
         n_param = op.get_n_model_param()
         bounds = [[0 for i in range(n_param)], [np.inf for i in range(n_param)]]
 
         op_param = op.fit_parameters(
-            data_file_path,
-            degree_of_confidence,
+            data_file_path_list,
+            adjusted_degree_of_confidence,
             row_limit=row_limit,
             bounds=bounds,
             used_arg_indices=used_arg_indices
         )
 
-        op.plot_model_performance(
-            op_param, data_file_path, plot_path, row_limit=row_limit, used_arg_indices=used_arg_indices
-        )
+        # for data_file_path_list
+        for dir_, path in zip(data_dir_list, data_file_path_list):
+            plot_path = os.path.join(plot_output_dir, op.get_name() + "__" + dir_ + ".jpg")
+
+            op.plot_model_performance(
+                op_param, path, plot_path, row_limit=row_limit, used_arg_indices=used_arg_indices
+            )
 
         ofile.write('"%s","%s",' % (op.get_name(), op.get_model_definition()))
         labels = op.get_model_parameter_labels()
