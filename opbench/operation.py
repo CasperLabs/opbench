@@ -154,7 +154,9 @@ class Operation:
 
         if isinstance(benchmark_data_file, str):
             input_arr, runtime_arr = parse_benchmark_result(
-                benchmark_data_file, row_limit=row_limit, used_arg_indices=used_arg_indices
+                benchmark_data_file,
+                row_limit=row_limit,
+                used_arg_indices=used_arg_indices,
             )
         elif isinstance(benchmark_data_file, list):
             if len(benchmark_data_file) == 0:
@@ -197,12 +199,24 @@ class Operation:
 
         return param
 
-    def plot_model_performance(self, param, data_file, output_file, row_limit=None, used_arg_indices=None):
+    def plot_model_performance(
+        self, param, data_file, output_file, row_limit=None, used_arg_indices=None
+    ):
         if self.get_model_input_size() == 0:
             plot_argumentless_operation(
-                self, param[0], data_file, output_file, row_limit=row_limit, used_arg_indices=used_arg_indices
+                self,
+                param[0],
+                data_file,
+                output_file,
+                row_limit=row_limit,
+                used_arg_indices=used_arg_indices,
             )
         elif self.get_model_input_size() == 1:
             plot_single_input_operation(
-                self, param, data_file, output_file, row_limit=row_limit, used_arg_indices=used_arg_indices
+                self,
+                param,
+                data_file,
+                output_file,
+                row_limit=row_limit,
+                used_arg_indices=used_arg_indices,
             )

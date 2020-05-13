@@ -5,6 +5,7 @@ import csv
 import pandas as pd
 
 from math import log, ceil, floor, isnan
+
 logging.basicConfig(level=logging.INFO)
 
 parser = argparse.ArgumentParser(
@@ -12,12 +13,19 @@ parser = argparse.ArgumentParser(
 )
 
 parser.add_argument("input_file", help="Path to the input CSV file")
-parser.add_argument("-s", "--significant-figures", type=int, default=2, help="Number of significant figures. Default: 2")
+parser.add_argument(
+    "-s",
+    "--significant-figures",
+    type=int,
+    default=2,
+    help="Number of significant figures. Default: 2",
+)
 parser.add_argument("-o", "--output", type=str, required=True, help="Output CSV file")
 
+
 def round_up(f, n):
-    assert(n > 0)
-    assert(not isnan(f))
+    assert n > 0
+    assert not isnan(f)
 
     if abs(f) > 1:
 
@@ -28,14 +36,14 @@ def round_up(f, n):
         exponent = max(n_digits - n + 1, 0)
         # print(n_digits, exponent)
 
-        f_ = f_ / 10**exponent
+        f_ = f_ / 10 ** exponent
 
         if f >= 0:
             f_ = ceil(f_)
         else:
             f_ = floor(f_)
 
-        f_ = f_ * 10**exponent
+        f_ = f_ * 10 ** exponent
         f_ = f_ * sign
 
     elif 0 <= abs(f) <= 1:
@@ -43,15 +51,17 @@ def round_up(f, n):
 
     return f_
 
+
 def format_int(i):
     return "{:_d}".format(i)
+
 
 def main():
     args = parser.parse_args()
 
     df = pd.read_csv(args.input_file, keep_default_na=False)
 
-    col_indices = [2*i+3 for i in range((len(df.columns)-2)//2)]
+    col_indices = [2 * i + 3 for i in range((len(df.columns) - 2) // 2)]
 
     col_labels = [df.columns[i] for i in col_indices]
 
@@ -78,9 +88,8 @@ def main():
 
         df[label] = new_col
 
-    df.to_csv(args.output, index=False, quotechar="\"", quoting=csv.QUOTE_NONNUMERIC)
+    df.to_csv(args.output, index=False, quotechar='"', quoting=csv.QUOTE_NONNUMERIC)
 
 
 if __name__ == "__main__":
     main()
-

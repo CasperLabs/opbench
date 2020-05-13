@@ -52,12 +52,11 @@ def main():
 
             operations.append(op)
         except Exception as e:
-            msg = "Error in operation definition:\n%s\n"%(str(op_dict))
+            msg = "Error in operation definition:\n%s\n" % (str(op_dict))
             raise Exception(msg)
             # msg = "Exception: {}\n".format(type(e).__name__)
             # msg = "{}\n".format(e)
             # raise Exception(msg)
-
 
     if not os.path.exists(plot_output_dir):
         os.makedirs(plot_output_dir)
@@ -67,10 +66,13 @@ def main():
     log_file = open(log_path, "w")
 
     ofile = open(csv_output_dir, "w")
-    ofile.write("\"Name\",\"Model\",")
+    ofile.write('"Name","Model",')
     ofile.write(
         ",".join(
-            ["\"Param_%d_label\",\"Param_%d_value\"" % (i + 1, i + 1) for i in range(max_param)]
+            [
+                '"Param_%d_label","Param_%d_value"' % (i + 1, i + 1)
+                for i in range(max_param)
+            ]
         )
     )
     ofile.write("\n")
@@ -101,7 +103,9 @@ def main():
             continue
 
         # Adjust degree of confidence based on the number of input files
-        adjusted_degree_of_confidence = 1 - (1 - degree_of_confidence)/len(data_file_path_list)
+        adjusted_degree_of_confidence = 1 - (1 - degree_of_confidence) / len(
+            data_file_path_list
+        )
 
         n_param = op.get_n_model_param()
         bounds = [[0 for i in range(n_param)], [np.inf for i in range(n_param)]]
@@ -111,22 +115,28 @@ def main():
             adjusted_degree_of_confidence,
             row_limit=row_limit,
             bounds=bounds,
-            used_arg_indices=used_arg_indices
+            used_arg_indices=used_arg_indices,
         )
 
         # for data_file_path_list
         for dir_, path in zip(data_dir_list, data_file_path_list):
-            plot_path = os.path.join(plot_output_dir, op.get_name() + "__" + dir_ + ".jpg")
+            plot_path = os.path.join(
+                plot_output_dir, op.get_name() + "__" + dir_ + ".jpg"
+            )
 
             op.plot_model_performance(
-                op_param, path, plot_path, row_limit=row_limit, used_arg_indices=used_arg_indices
+                op_param,
+                path,
+                plot_path,
+                row_limit=row_limit,
+                used_arg_indices=used_arg_indices,
             )
 
         ofile.write('"%s","%s",' % (op.get_name(), op.get_model_definition()))
         labels = op.get_model_parameter_labels()
         ofile.write(",".join(['"%s",%.6e' % (i, j) for i, j in zip(labels, op_param)]))
 
-        remaining_cells = max(0, max_param - len(op_param))*2
+        remaining_cells = max(0, max_param - len(op_param)) * 2
         for i in range(remaining_cells):
             ofile.write(",")
 

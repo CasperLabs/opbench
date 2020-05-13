@@ -13,7 +13,9 @@ def plot_single_input_operation(
 
     assert operation.get_model_input_size() == 1
 
-    input_arr, runtime_arr = parse_benchmark_result(data_file, row_limit=row_limit, used_arg_indices=used_arg_indices)
+    input_arr, runtime_arr = parse_benchmark_result(
+        data_file, row_limit=row_limit, used_arg_indices=used_arg_indices
+    )
 
     model = operation.get_runtime_model()
 
@@ -79,7 +81,9 @@ def plot_argumentless_operation(
 
     assert operation.get_model_input_size() == 0
 
-    input_arr, runtime_arr = parse_benchmark_result(data_file, row_limit=row_limit, used_arg_indices=used_arg_indices)
+    input_arr, runtime_arr = parse_benchmark_result(
+        data_file, row_limit=row_limit, used_arg_indices=used_arg_indices
+    )
 
     mean = np.mean(runtime_arr)
     std = np.std(runtime_arr)

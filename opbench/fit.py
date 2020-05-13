@@ -3,10 +3,13 @@ import numpy as np
 from math import ceil
 from scipy.optimize import least_squares, fmin, fsolve
 
+
 def modify_residual(x, alpha):
     return max(x, 0) - alpha * max(-x, 0)
 
+
 modify_residual_vectorized = np.vectorize(modify_residual)
+
 
 def fit(operation, input_arr, runtime_arr, degree_of_confidence, x0=None, bounds=None):
     input_size = len(input_arr)
@@ -37,7 +40,7 @@ def fit(operation, input_arr, runtime_arr, degree_of_confidence, x0=None, bounds
     param = result.x
 
     model_result = runtime_model(param, input_arr)
-    difference = runtime_arr-model_result
+    difference = runtime_arr - model_result
 
     constant = fit_constant(difference, degree_of_confidence)
 
@@ -47,24 +50,26 @@ def fit(operation, input_arr, runtime_arr, degree_of_confidence, x0=None, bounds
 
 
 def fit_constant(runtime_arr, degree_of_confidence):
-    assert(0 <= degree_of_confidence <= 1)
+    assert 0 <= degree_of_confidence <= 1
 
     if len(runtime_arr) < 10:
         raise Exception("Data series too small for fitting")
     sorted_ = np.sort(runtime_arr)
 
-    idx = ceil((len(runtime_arr)-1)*degree_of_confidence)
+    idx = ceil((len(runtime_arr) - 1) * degree_of_confidence)
 
-    if idx == len(runtime_arr)-1:
+    if idx == len(runtime_arr) - 1:
         return sorted_[-1]
 
     lower_bound = sorted_[idx]
-    upper_bound = sorted_[idx+1]
+    upper_bound = sorted_[idx + 1]
 
-    lower_weight = np.mean(sorted_[:idx+1])
-    upper_weight = np.mean(sorted_[idx+1:])
+    lower_weight = np.mean(sorted_[: idx + 1])
+    upper_weight = np.mean(sorted_[idx + 1 :])
 
-    result = lower_bound + (upper_bound - lower_bound) * (lower_weight) / (lower_weight + upper_weight)
+    result = lower_bound + (upper_bound - lower_bound) * (lower_weight) / (
+        lower_weight + upper_weight
+    )
 
     # print(runtime_arr.shape, runtime_arr[-10:])
     # print(idx, result, degree_of_confidence)

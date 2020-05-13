@@ -30,7 +30,6 @@ setup(
     },
     zip_safe=False,
     platforms="any",
-
     # ext_modules=cythonize("opbench/*.pyx"),
     # include_dirs=[numpy.get_include()],
 )
