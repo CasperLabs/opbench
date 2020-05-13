@@ -1,10 +1,11 @@
-import numpy
 from setuptools import setup, find_packages
-from Cython.Build import cythonize
+
+# import numpy
+# from Cython.Build import cythonize
 
 setup(
     # Basic info
-    name="operation_benchmarking",
+    name="opbench",
     # version=version,
     author="Onur Solmaz",
     author_email="onur@casperlabs.io",
@@ -12,13 +13,23 @@ setup(
     description="",
     # long_description='',
     classifiers=[],
-    # Packages and depencies
-    # package_dir={'': 'highway_economic_simulator'},
     packages=find_packages(exclude=["contrib", "docs", "tests"]),
-    # packages=find_packages('highway_economic_simulator'),
-    install_requires=["numpy", "scipy", "cython", "progressbar2", "sortedcontainers",],
-    ext_modules=cythonize("operation_benchmarking/*.pyx"),
-    include_dirs=[numpy.get_include()],
+    install_requires=[
+        "numpy",
+        "scipy",
+        "cython",
+        "progressbar2",
+        "sortedcontainers",
+        "toml",
+    ],
+    entry_points={
+        "console_scripts": [
+            "opbench_batch_fit=opbench.bin.opbench_batch_fit:main",
+            "opbench_round_results=opbench.bin.opbench_round_results:main",
+        ]
+    },
     zip_safe=False,
     platforms="any",
+    # ext_modules=cythonize("opbench/*.pyx"),
+    # include_dirs=[numpy.get_include()],
 )

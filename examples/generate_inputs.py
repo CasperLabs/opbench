@@ -1,4 +1,4 @@
-from operation_benchmarking.operations import *
+from opbench.operations import *
 
 N_INPUTS = 10000
 

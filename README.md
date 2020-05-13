@@ -1,4 +1,4 @@
-# operation_benchmarking
+# opbench
 
 Proof of Concept for assigning predictive models of runtime to operations (opcodes, functions, etc.) in distributed networks.
 See [the related write-up](https://hackmd.io/@onur/predictive_models_runtime).

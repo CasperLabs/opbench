@@ -1,4 +1,4 @@
-from operation_benchmarking.operations import *
+from opbench.operations import *
 import logging
 
 logging.basicConfig(level=logging.INFO)

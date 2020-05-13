@@ -1,0 +1,198 @@
+[config]
+data_dir = "host-function-metrics"
+plot_output_dir = "out"
+degree_of_confidence = 0.99
+row_limit = 10000
+csv_output_path = "host-function-results.csv"
+log_path = "log.txt"
+
+
+[[operation]]
+name = "add"
+type = "constant"
+
+
+[[operation]]
+name = "create_purse"
+type = "constant"
+
+
+[[operation]]
+name = "get_arg_size"
+type = "constant"
+
+
+[[operation]]
+name = "get_balance"
+type = "constant"
+
+
+[[operation]]
+name = "get_blocktime"
+type = "constant"
+
+
+[[operation]]
+name = "get_caller"
+type = "constant"
+
+
+[[operation]]
+name = "get_main_purse"
+type = "constant"
+
+
+[[operation]]
+name = "get_phase"
+type = "constant"
+
+
+[[operation]]
+name = "get_system_contract"
+type = "constant"
+
+
+[[operation]]
+name = "is_valid_uref"
+type = "constant"
+
+
+[[operation]]
+name = "read_value"
+type = "constant"
+
+
+[[operation]]
+name = "remove_associated_key"
+type = "constant"
+
+
+[[operation]]
+name = "revert"
+type = "constant"
+
+
+[[operation]]
+name = "set_action_threshold"
+type = "constant"
+
+
+[[operation]]
+name = "transfer_from_purse_to_account"
+type = "constant"
+
+
+[[operation]]
+name = "transfer_from_purse_to_purse"
+type = "constant"
+
+
+[[operation]]
+name = "transfer_to_account"
+type = "constant"
+
+
+[[operation]]
+name = "update_associated_key"
+type = "constant"
+
+
+# Linear operations
+
+[[operation]]
+name = "add_local"
+type = "linear"
+arg_descriptions = ["Placeholder"]
+arg_units = ["Placeholder"]
+
+[[operation]]
+name = "call_contract"
+type = "linear"
+arg_descriptions = ["Placeholder"]
+arg_units = ["Placeholder"]
+
+
+[[operation]]
+name = "get_arg"
+type = "linear"
+used_arg_indices = [0]
+arg_descriptions = ["Placeholder"]
+arg_units = ["Placeholder"]
+
+
+[[operation]]
+name = "get_key"
+type = "linear"
+arg_descriptions = ["Placeholder"]
+arg_units = ["Placeholder"]
+
+
+[[operation]]
+name = "has_key"
+type = "linear"
+arg_descriptions = ["Placeholder"]
+arg_units = ["Placeholder"]
+
+
+[[operation]]
+name = "load_named_keys"
+type = "linear"
+arg_descriptions = ["Placeholder"]
+arg_units = ["Placeholder"]
+
+
+[[operation]]
+name = "new_uref"
+type = "linear"
+arg_descriptions = ["Placeholder"]
+arg_units = ["Placeholder"]
+
+
+[[operation]]
+name = "print"
+type = "linear"
+arg_descriptions = ["Placeholder"]
+arg_units = ["Placeholder"]
+
+
+[[operation]]
+name = "put_key"
+type = "linear"
+arg_descriptions = ["Placeholder"]
+arg_units = ["Placeholder"]
+
+
+[[operation]]
+name = "read_host_buffer"
+type = "linear"
+arg_descriptions = ["Placeholder"]
+arg_units = ["Placeholder"]
+
+
+[[operation]]
+name = "read_value_local"
+arg_descriptions = ["Placeholder"]
+arg_units = ["Placeholder"]
+type = "linear"
+
+
+[[operation]]
+name = "remove_key"
+type = "linear"
+arg_descriptions = ["Placeholder"]
+arg_units = ["Placeholder"]
+
+
+[[operation]]
+name = "ret"
+type = "linear"
+used_arg_indices = [1]
+arg_descriptions = ["Placeholder"]
+arg_units = ["Placeholder"]
+
+
+[[operation]]
+name = "write"
+type = "linear"
+arg_descriptions = ["Placeholder"]
+arg_units = ["Placeholder"]

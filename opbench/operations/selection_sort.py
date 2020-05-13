@@ -1,5 +1,5 @@
 import numpy as np
-from operation_benchmarking.operation import QuadraticOperation
+from opbench.types import QuadraticOperation
 from .helper import randrange_logarithmic
 import random
 

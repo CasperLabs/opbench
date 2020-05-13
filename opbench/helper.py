@@ -1,12 +1,13 @@
 import pandas as pd
 import numpy as np
 
-from operation_benchmarking.config import TIME_SCALE
+from opbench.config import TIME_SCALE
+
 
 def parse_benchmark_result(
-    csv_file_path, remove_outlier_sigma_count=5, row_limit=None,
+    csv_file_path, remove_outlier_sigma_count=5, row_limit=None, used_arg_indices=None
 ):
-    df = pd.read_csv(csv_file_path)
+    df = pd.read_csv(csv_file_path, nrows=row_limit)
     input_arr = df["args"].to_list()
     input_arr = [eval(i) for i in input_arr]
     input_arr = np.array(input_arr)
@@ -34,11 +35,14 @@ def parse_benchmark_result(
         input_arr = np.array(input_arr_new)
         runtime_arr = np.array(runtime_arr_new)
 
-    if row_limit != None:
-        if len(runtime_arr) > row_limit:
-            input_arr = input_arr[:row_limit, :]
-            runtime_arr = runtime_arr[:row_limit]
+    # if row_limit != None:
+    #     if len(runtime_arr) > row_limit:
+    #         input_arr = input_arr[:row_limit, :]
+    #         runtime_arr = runtime_arr[:row_limit]
 
     runtime_arr = runtime_arr / TIME_SCALE
+
+    if used_arg_indices is not None:
+        input_arr = input_arr[:, used_arg_indices]
 
     return input_arr, runtime_arr
