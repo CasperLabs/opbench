@@ -5,7 +5,7 @@ import argparse
 
 import matplotlib.pyplot as plt
 
-from operation_benchmarking.helper import parse_benchmark_result
+from opbench.helper import parse_benchmark_result
 
 parser = argparse.ArgumentParser(
     description="Given a benchmark data file, plot runtime against a single argument"

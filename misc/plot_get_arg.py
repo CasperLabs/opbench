@@ -4,7 +4,7 @@ import sys
 
 import matplotlib.pyplot as plt
 
-from operation_benchmarking.helper import parse_benchmark_result
+from opbench.helper import parse_benchmark_result
 
 input_arr, runtime_arr = parse_benchmark_result(sys.argv[1])
 

@@ -2,9 +2,9 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from scipy.optimize import least_squares, fmin, fsolve
 import numpy as np
-from operation_benchmarking.helper import parse_benchmark_result
+from opbench.helper import parse_benchmark_result
 
-from operation_benchmarking.config import TIME_UNIT
+from opbench.config import TIME_UNIT
 
 
 def plot_single_input_operation(

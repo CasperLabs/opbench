@@ -7,7 +7,7 @@ import copy
 
 import numpy as np
 
-from operation_benchmarking.types import TYPES
+from opbench.types import TYPES
 
 logging.basicConfig(level=logging.INFO)
 

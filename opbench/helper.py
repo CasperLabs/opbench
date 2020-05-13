@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 
-from operation_benchmarking.config import TIME_SCALE
+from opbench.config import TIME_SCALE
 
 
 def parse_benchmark_result(

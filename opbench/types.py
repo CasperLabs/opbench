@@ -1,5 +1,5 @@
-from operation_benchmarking.operation import Operation
-from operation_benchmarking.models import constant, linear, quadratic
+from opbench.operation import Operation
+from opbench.models import constant, linear, quadratic
 
 
 class LinearOperation(Operation):

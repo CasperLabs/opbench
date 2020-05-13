@@ -1,6 +1,6 @@
 # Benchmarking and analysis of operations on the CasperLabs blockchain
 
-This requires that the `operation_benchmarking` module is installed. If it's not already, follow the instructions on the [main README.md](../../README.md).
+This requires that the `opbench` module is installed. If it's not already, follow the instructions on the [main README.md](../../README.md).
 
 
 ## Host functions
@@ -17,8 +17,8 @@ unzip host-function-metrics.zip
 ### Fitting
 
 ```
-ob_batch_fit host-function-input.toml
-ob_round_results host-function-results.csv -o host-function-results-rounded.csv
+opbench_batch_fit host-function-input.toml
+opbench_round_results host-function-results.csv -o host-function-results-rounded.csv
 ```
 
 This will generate plots in the `out` directory and also create parsable output in `host-function-results.csv`.
@@ -40,7 +40,7 @@ unzip opcode-metrics.zip
 ### Fitting
 
 ```
-ob_batch_fit opcode-input.toml
-ob_round_results opcode-results.csv -o opcode-results-rounded.csv
+opbench_batch_fit opcode-input.toml
+opbench_round_results opcode-results.csv -o opcode-results-rounded.csv
 ```
 

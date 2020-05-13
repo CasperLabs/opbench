@@ -1,5 +1,5 @@
 from math import log
-from operation_benchmarking import Operation
+from opbench import Operation
 from .helper import randrange_logarithmic
 
 LOWER_LIMIT = 10

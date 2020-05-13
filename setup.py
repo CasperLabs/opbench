@@ -5,7 +5,7 @@ from setuptools import setup, find_packages
 
 setup(
     # Basic info
-    name="operation_benchmarking",
+    name="opbench",
     # version=version,
     author="Onur Solmaz",
     author_email="onur@casperlabs.io",
@@ -24,13 +24,13 @@ setup(
     ],
     entry_points={
         "console_scripts": [
-            "ob_batch_fit=operation_benchmarking.bin.ob_batch_fit:main",
-            "ob_round_results=operation_benchmarking.bin.ob_round_results:main",
+            "opbench_batch_fit=opbench.bin.opbench_batch_fit:main",
+            "opbench_round_results=opbench.bin.opbench_round_results:main",
         ]
     },
     zip_safe=False,
     platforms="any",
 
-    # ext_modules=cythonize("operation_benchmarking/*.pyx"),
+    # ext_modules=cythonize("opbench/*.pyx"),
     # include_dirs=[numpy.get_include()],
 )

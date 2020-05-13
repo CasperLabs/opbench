@@ -1,7 +1,7 @@
 # This script can be used to generate Operation classes for WASM opcodes once
-# the module `operation_benchmarking` is installed
+# the module `opbench` is installed
 
-from operation_benchmarking.operations.wasm_opcodes import OPCODE_NAMES
+from opbench.operations.wasm_opcodes import OPCODE_NAMES
 
 ofile = open("out.py", "w")
 

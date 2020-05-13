@@ -8,7 +8,7 @@ from math import log, ceil, floor, isnan
 logging.basicConfig(level=logging.INFO)
 
 parser = argparse.ArgumentParser(
-    description="Round results from ob_batch_fit to obtain gas costs"
+    description="Round results from opbench_batch_fit to obtain gas costs"
 )
 
 parser.add_argument("input_file", help="Path to the input CSV file")

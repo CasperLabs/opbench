@@ -8,13 +8,13 @@ from math import ceil
 
 from scipy.optimize import least_squares, fmin, fsolve
 
-from operation_benchmarking.fit import fit, fit_constant
-from operation_benchmarking.models import constant, linear, quadratic
-from operation_benchmarking.plotting import (
+from opbench.fit import fit, fit_constant
+from opbench.models import constant, linear, quadratic
+from opbench.plotting import (
     plot_single_input_operation,
     plot_argumentless_operation,
 )
-from operation_benchmarking.helper import parse_benchmark_result
+from opbench.helper import parse_benchmark_result
 
 
 class Operation:
