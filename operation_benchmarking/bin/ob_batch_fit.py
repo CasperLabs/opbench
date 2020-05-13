@@ -64,13 +64,13 @@ def main():
 
     max_param = max([op.get_n_model_param() for op in operations])
 
-    skipped_ofile = open(log_path, "w")
+    log_file = open(log_path, "w")
 
     ofile = open(csv_output_dir, "w")
-    ofile.write("Name,Model,")
+    ofile.write("\"Name\",\"Model\",")
     ofile.write(
         ",".join(
-            ["Param_%d_label,Param_%d_value" % (i + 1, i + 1) for i in range(max_param)]
+            ["\"Param_%d_label\",\"Param_%d_value\"" % (i + 1, i + 1) for i in range(max_param)]
         )
     )
     ofile.write("\n")
@@ -97,7 +97,7 @@ def main():
                 data_file_path_list.remove(path)
 
         if len(data_file_path_list) == 0:
-            skipped_ofile.write("%s\n" % (op.get_name()))
+            log_file.write("%s\n" % (op.get_name()))
             continue
 
         # Adjust degree of confidence based on the number of input files
@@ -125,6 +125,11 @@ def main():
         ofile.write('"%s","%s",' % (op.get_name(), op.get_model_definition()))
         labels = op.get_model_parameter_labels()
         ofile.write(",".join(['"%s",%.6e' % (i, j) for i, j in zip(labels, op_param)]))
+
+        remaining_cells = max(0, max_param - len(op_param))*2
+        for i in range(remaining_cells):
+            ofile.write(",")
+
         ofile.write("\n")
         ofile.flush()
 

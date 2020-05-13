@@ -4,7 +4,7 @@ data_dir = "opcode-metrics"
 plot_output_dir = "out"
 degree_of_confidence = 0.99
 row_limit = 10000
-csv_output_path = "host-function-results.csv"
+csv_output_path = "opcode-results.csv"
 log_path = "log.txt"
 
 
