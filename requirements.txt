@@ -3,3 +3,5 @@ scipy
 progressbar2
 sortedcontainers
 toml
+pandas
+matplotlib
