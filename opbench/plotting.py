@@ -127,13 +127,13 @@ def plot_argumentless_operation(
     ]
 
     tick_labels = [
-        "%.2g\n$\mu-3\sigma$" % tick_vals[0],
-        "%.2g\n$\mu-2\sigma$" % tick_vals[1],
-        "%.2g\n$\mu-\sigma$" % tick_vals[2],
-        "%.2g\n$\mu$" % tick_vals[3],
-        "%.2g\n$\mu+\sigma$" % tick_vals[4],
-        "%.2g\n$\mu+2\sigma$" % tick_vals[5],
-        "%.2g\n$\mu+3\sigma$" % tick_vals[6],
+        "%.2g\n$\\mu-3\\sigma$" % tick_vals[0],
+        "%.2g\n$\\mu-2\\sigma$" % tick_vals[1],
+        "%.2g\n$\\mu-\\sigma$" % tick_vals[2],
+        "%.2g\n$\\mu$" % tick_vals[3],
+        "%.2g\n$\\mu+\\sigma$" % tick_vals[4],
+        "%.2g\n$\\mu+2\\sigma$" % tick_vals[5],
+        "%.2g\n$\\mu+3\\sigma$" % tick_vals[6],
     ]
 
     negative = False

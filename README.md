@@ -5,7 +5,7 @@ See [the related write-up](https://hackmd.io/@onur/predictive_models_runtime).
 
 ## Install
 
-Requirements: Python 3.5+, NumPy, SciPy, Cython.
+Requirements: Python 3.5+, NumPy, SciPy.
 
 ```
 sudo python setup.py install

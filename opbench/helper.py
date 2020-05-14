@@ -1,6 +1,8 @@
 import pandas as pd
 import numpy as np
 
+from math import log, ceil, floor, isnan
+
 from opbench.config import TIME_SCALE
 
 
@@ -46,3 +48,33 @@ def parse_benchmark_result(
         input_arr = input_arr[:, used_arg_indices]
 
     return input_arr, runtime_arr
+
+
+def round_up(f, n):
+    assert n > 0
+    assert not isnan(f)
+
+    if abs(f) > 1:
+
+        sign = 1 if f >= 0 else -1
+        f_ = abs(f)
+
+        n_digits = floor(log(f_, 10))
+        exponent = max(n_digits - n + 1, 0)
+        # print(n_digits, exponent)
+
+        f_ = f_ / 10 ** exponent
+
+        if f >= 0:
+            f_ = ceil(f_)
+        else:
+            f_ = floor(f_)
+
+        f_ = f_ * 10 ** exponent
+        f_ = f_ * sign
+
+    elif 0 <= abs(f) <= 1:
+        f_ = 0
+
+    return f_
+

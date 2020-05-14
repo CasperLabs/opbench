@@ -4,7 +4,7 @@ import csv
 
 import pandas as pd
 
-from math import log, ceil, floor, isnan
+from opbench.helper import round_up
 
 logging.basicConfig(level=logging.INFO)
 
@@ -23,35 +23,6 @@ parser.add_argument(
 parser.add_argument("-o", "--output", type=str, required=True, help="Output CSV file")
 
 
-def round_up(f, n):
-    assert n > 0
-    assert not isnan(f)
-
-    if abs(f) > 1:
-
-        sign = 1 if f >= 0 else -1
-        f_ = abs(f)
-
-        n_digits = floor(log(f_, 10))
-        exponent = max(n_digits - n + 1, 0)
-        # print(n_digits, exponent)
-
-        f_ = f_ / 10 ** exponent
-
-        if f >= 0:
-            f_ = ceil(f_)
-        else:
-            f_ = floor(f_)
-
-        f_ = f_ * 10 ** exponent
-        f_ = f_ * sign
-
-    elif 0 <= abs(f) <= 1:
-        f_ = 0
-
-    return f_
-
-
 def format_int(i):
     return "{:_d}".format(i)
 
@@ -64,9 +35,6 @@ def main():
     col_indices = [2 * i + 3 for i in range((len(df.columns) - 2) // 2)]
 
     col_labels = [df.columns[i] for i in col_indices]
-
-    # print(round_up(3.2, 1)) # Should give 4
-    # print(round_up(684, 2)) # Should give 690
 
     for label in col_labels:
         col = df[label].to_list()
