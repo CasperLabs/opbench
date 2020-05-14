@@ -1,6 +1,8 @@
 # opbench
 
-Proof of Concept for assigning predictive models of runtime to operations (opcodes, functions, etc.) in distributed networks.
+![Python package](https://github.com/osolmaz/opbench/workflows/Python%20package/badge.svg)
+
+Python package for assigning and fitting models of runtime to operations (opcodes, functions, etc.).
 See [the related write-up](https://hackmd.io/@onur/predictive_models_runtime).
 
 ## Install

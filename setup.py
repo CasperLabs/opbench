@@ -1,5 +1,8 @@
 from setuptools import setup, find_packages
 
+with open("requirements.txt") as f:
+    required = f.read().splitlines()
+
 # import numpy
 # from Cython.Build import cythonize
 
@@ -14,14 +17,7 @@ setup(
     # long_description='',
     classifiers=[],
     packages=find_packages(exclude=["contrib", "docs", "tests"]),
-    install_requires=[
-        "numpy",
-        "scipy",
-        "cython",
-        "progressbar2",
-        "sortedcontainers",
-        "toml",
-    ],
+    install_requires=required,
     entry_points={
         "console_scripts": [
             "opbench_batch_fit=opbench.bin.opbench_batch_fit:main",
