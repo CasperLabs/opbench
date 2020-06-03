@@ -5,6 +5,4 @@ sortedcontainers
 toml
 pandas
 matplotlib
-
-opbench
 setuptools

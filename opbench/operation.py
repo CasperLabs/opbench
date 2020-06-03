@@ -194,7 +194,7 @@ class Operation:
         return param
 
     def plot_model_performance(
-        self, param, data_file, output_file, row_limit=None, used_arg_indices=None
+            self, param, data_file, output_file, row_limit=None, used_arg_indices=None, bench_label=None,
     ):
         if self.get_model_input_size() == 0:
             plot_argumentless_operation(
@@ -204,6 +204,7 @@ class Operation:
                 output_file,
                 row_limit=row_limit,
                 used_arg_indices=used_arg_indices,
+                bench_label=bench_label,
             )
         elif self.get_model_input_size() == 1:
             plot_single_input_operation(
@@ -213,4 +214,5 @@ class Operation:
                 output_file,
                 row_limit=row_limit,
                 used_arg_indices=used_arg_indices,
+                bench_label=bench_label,
             )

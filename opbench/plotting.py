@@ -6,7 +6,7 @@ from opbench.helper import parse_benchmark_result
 
 
 def plot_single_input_operation(
-    operation, param, data_file, output_file, row_limit=None, used_arg_indices=None
+        operation, param, data_file, output_file, row_limit=None, used_arg_indices=None, bench_label=None,
 ):
 
     assert operation.get_model_input_size() == 1
@@ -53,11 +53,16 @@ def plot_single_input_operation(
 
     plt.plot(X, Y, color="red", label=fit_label)
 
-    plt.title(
-        "Operation: %s \n\
-    Points above: %d, Points below: %d, DoC: %.1f%%"
-        % (operation.get_name(), len(x_above), len(x_below), ratio * 100,)
-    )
+    title = "Operation: %s"%(operation.get_name())
+
+    if bench_label is not None:
+        title += ", Label: %s"%bench_label
+
+    title += "\n"
+    title += "Points above: %d, Points below: %d, DoC: %.1f%%"% (len(x_above), len(x_below), ratio * 100)
+
+    plt.title(title)
+
     plt.xlabel(
         operation.get_model_variable_descriptions()[0]
         + " ["
@@ -74,7 +79,7 @@ def plot_single_input_operation(
 
 
 def plot_argumentless_operation(
-    operation, constant, data_file, output_file, row_limit=None, used_arg_indices=None
+        operation, constant, data_file, output_file, row_limit=None, used_arg_indices=None, bench_label=None,
 ):
 
     assert operation.get_model_input_size() == 0
@@ -104,11 +109,16 @@ def plot_argumentless_operation(
 
     plt.axvline(constant, color="r", linewidth=2, label="Threshold = %.4g" % constant)
 
-    plt.title(
-        "Operation: %s \n\
-    Points left: %d, Points right: %d, DoC: %.1f%%"
-        % (operation.get_name(), len(y_left), len(y_right), ratio * 100,)
-    )
+    title = "Operation: %s"%(operation.get_name())
+
+    if bench_label is not None:
+        title += ", Label: %s"%bench_label
+
+    title += "\n"
+    title += "Points left: %d, Points right: %d, DoC: %.1f%%"% (len(y_left), len(y_right), ratio * 100)
+
+    plt.title(title)
+
     plt.xlabel("Runtime [%s]" % TIME_UNIT)
     plt.ylabel("Number of points")
 

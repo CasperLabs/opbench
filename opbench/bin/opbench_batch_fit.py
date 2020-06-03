@@ -130,6 +130,7 @@ def main():
                 plot_path,
                 row_limit=row_limit,
                 used_arg_indices=used_arg_indices,
+                bench_label=os.path.basename(dir_),
             )
 
         ofile.write('"%s","%s",' % (op.get_name(), op.get_model_definition()))
