@@ -121,7 +121,7 @@ def main():
         # for data_file_path_list
         for dir_, path in zip(data_dir_list, data_file_path_list):
             plot_path = os.path.join(
-                plot_output_dir, op.get_name() + "__" + dir_ + ".jpg"
+                plot_output_dir, op.get_name() + "__" + os.path.basename(dir_) + ".jpg"
             )
 
             op.plot_model_performance(

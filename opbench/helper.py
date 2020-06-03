@@ -22,7 +22,7 @@ def parse_benchmark_result(
     if runtime_arr.dtype is not np.float64:
         runtime_arr = runtime_arr.astype(np.float64)
 
-    if remove_outlier_sigma_count != None:
+    if remove_outlier_sigma_count is not None:
         input_arr_new = []
         runtime_arr_new = []
 
@@ -54,14 +54,14 @@ def round_up(f, n):
     assert n > 0
     assert not isnan(f)
 
+    sign = 1 if f >= 0 else -1
+
     if abs(f) > 1:
 
-        sign = 1 if f >= 0 else -1
         f_ = abs(f)
 
         n_digits = floor(log(f_, 10))
         exponent = max(n_digits - n + 1, 0)
-        # print(n_digits, exponent)
 
         f_ = f_ / 10 ** exponent
 
@@ -73,8 +73,13 @@ def round_up(f, n):
         f_ = f_ * 10 ** exponent
         f_ = f_ * sign
 
-    elif 0 <= abs(f) <= 1:
+    elif 0 < abs(f) <= 1:
+        f_ = sign
+
+    elif f == 0:
         f_ = 0
 
-    return f_
+    else:
+        raise Exception("Something went wrong")
 
+    return f_

@@ -1,10 +1,11 @@
 [config]
-data_dir = "opcode-metrics"
+# data_dir = "opcode-metrics"
 # data_dir = ["opcode-metrics", "opcode-metrics-alt"]
+data_dir = ["bench_1thr", "bench_2thr", "bench_4thr", "bench_8thr"]
 plot_output_dir = "out"
 degree_of_confidence = 0.99
 row_limit = 10000
-csv_output_path = "opcode-results.csv"
+csv_output_path = "wasm-opcodes-results.csv"
 log_path = "log.txt"
 
 

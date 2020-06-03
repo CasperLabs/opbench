@@ -1,20 +1,14 @@
 import time
+
+import numpy as np
 import progressbar
 
-import pandas as pd
-import numpy as np
-
-from math import ceil
-
-from scipy.optimize import least_squares, fmin, fsolve
-
 from opbench.fit import fit, fit_constant
-from opbench.models import constant, linear, quadratic
+from opbench.helper import parse_benchmark_result
 from opbench.plotting import (
     plot_single_input_operation,
     plot_argumentless_operation,
 )
-from opbench.helper import parse_benchmark_result
 
 
 class Operation:

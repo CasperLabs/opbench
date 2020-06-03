@@ -67,7 +67,7 @@ def fit_constant(runtime_arr, degree_of_confidence):
     lower_weight = np.mean(sorted_[: idx + 1])
     upper_weight = np.mean(sorted_[idx + 1 :])
 
-    result = lower_bound + (upper_bound - lower_bound) * (lower_weight) / (
+    result = lower_bound + (upper_bound - lower_bound) * lower_weight / (
         lower_weight + upper_weight
     )
 
