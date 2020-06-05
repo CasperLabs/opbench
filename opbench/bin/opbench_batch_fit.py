@@ -8,6 +8,7 @@ import copy
 import numpy as np
 
 from opbench.types import TYPES
+from opbench.output import write_output_csv, write_fee_schedule
 
 logging.basicConfig(level=logging.INFO)
 
@@ -29,8 +30,16 @@ def main():
     degree_of_confidence = config_dict["degree_of_confidence"]
     row_limit = config_dict["row_limit"]
     plot_output_dir = os.path.join(base_dir, config_dict["plot_output_dir"])
-    csv_output_dir = os.path.join(base_dir, config_dict["csv_output_path"])
+    model_output_dir = os.path.join(base_dir, config_dict["model_output_dir"])
+    csv_output_path = os.path.join(base_dir, config_dict["csv_output_path"])
+    fee_schedule_path = os.path.join(base_dir, config_dict["fee_schedule_path"])
     log_path = os.path.join(base_dir, config_dict["log_path"])
+
+    # Sort the operations with respect to name in the output CSV file and the fee schedule
+    if "sort_output" in config_dict:
+        sort_output = config_dict["sort_output"]
+    else:
+        sort_output = True
 
     if isinstance(config_dict["data_dir"], str):
         data_dir_list = [os.path.join(base_dir, config_dict["data_dir"])]
@@ -61,21 +70,10 @@ def main():
     if not os.path.exists(plot_output_dir):
         os.makedirs(plot_output_dir)
 
-    max_param = max([op.get_n_model_param() for op in operations])
+    if not os.path.exists(model_output_dir):
+        os.makedirs(model_output_dir)
 
     log_file = open(log_path, "w")
-
-    ofile = open(csv_output_dir, "w")
-    ofile.write('"Name","Model",')
-    ofile.write(
-        ",".join(
-            [
-                '"Param_%d_label","Param_%d_value"' % (i + 1, i + 1)
-                for i in range(max_param)
-            ]
-        )
-    )
-    ofile.write("\n")
 
     for op, op_dict in zip(operations, parsed_input_dict["operation"]):
 
@@ -124,6 +122,10 @@ def main():
                 plot_output_dir, op.get_name() + "__" + os.path.basename(dir_) + ".jpg"
             )
 
+            model_basename = os.path.join(
+                model_output_dir, op.get_name() + "__" + os.path.basename(dir_)
+            )
+
             op.plot_model_performance(
                 op_param,
                 path,
@@ -133,23 +135,17 @@ def main():
                 bench_label=os.path.basename(dir_),
             )
 
-        ofile.write('"%s","%s",' % (op.get_name(), op.get_model_definition()))
-        labels = op.get_model_parameter_labels()
-        ofile.write(",".join(['"%s",%.6e' % (i, j) for i, j in zip(labels, op_param)]))
+            op.output_model_surface(
+                op_param,
+                path,
+                model_basename,
+                row_limit=row_limit,
+                used_arg_indices=used_arg_indices,
+                bench_label=os.path.basename(dir_),
+            )
 
-        remaining_cells = max(0, max_param - len(op_param)) * 2
-        for i in range(remaining_cells):
-            ofile.write(",")
-
-        ofile.write("\n")
-        ofile.flush()
-
-        # input_arr, runtime_arr = parse_benchmark_result(data_file_path, row_limit=row_limit)
-        # plt.figure()
-        # plt.scatter(input_arr[:,0], runtime_arr, marker='x')
-        # plt.grid()
-        # # plt.hist(runtime_arr)
-        # plt.show()
+    write_output_csv(operations, csv_output_path, sort=sort_output)
+    write_fee_schedule(operations, fee_schedule_path, sort=sort_output)
 
 
 if __name__ == "__main__":

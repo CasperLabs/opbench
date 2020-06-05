@@ -6,7 +6,13 @@ from opbench.helper import parse_benchmark_result
 
 
 def plot_single_input_operation(
-        operation, param, data_file, output_file, row_limit=None, used_arg_indices=None, bench_label=None,
+    operation,
+    param,
+    data_file,
+    output_file,
+    row_limit=None,
+    used_arg_indices=None,
+    bench_label=None,
 ):
 
     assert operation.get_model_input_size() == 1
@@ -53,13 +59,17 @@ def plot_single_input_operation(
 
     plt.plot(X, Y, color="red", label=fit_label)
 
-    title = "Operation: %s"%(operation.get_name())
+    title = "Operation: %s" % (operation.get_name())
 
     if bench_label is not None:
-        title += ", Label: %s"%bench_label
+        title += ", Label: %s" % bench_label
 
     title += "\n"
-    title += "Points above: %d, Points below: %d, DoC: %.1f%%"% (len(x_above), len(x_below), ratio * 100)
+    title += "Points above: %d, Points below: %d, DoC: %.1f%%" % (
+        len(x_above),
+        len(x_below),
+        ratio * 100,
+    )
 
     plt.title(title)
 
@@ -79,7 +89,13 @@ def plot_single_input_operation(
 
 
 def plot_argumentless_operation(
-        operation, constant, data_file, output_file, row_limit=None, used_arg_indices=None, bench_label=None,
+    operation,
+    constant,
+    data_file,
+    output_file,
+    row_limit=None,
+    used_arg_indices=None,
+    bench_label=None,
 ):
 
     assert operation.get_model_input_size() == 0
@@ -109,13 +125,17 @@ def plot_argumentless_operation(
 
     plt.axvline(constant, color="r", linewidth=2, label="Threshold = %.4g" % constant)
 
-    title = "Operation: %s"%(operation.get_name())
+    title = "Operation: %s" % (operation.get_name())
 
     if bench_label is not None:
-        title += ", Label: %s"%bench_label
+        title += ", Label: %s" % bench_label
 
     title += "\n"
-    title += "Points left: %d, Points right: %d, DoC: %.1f%%"% (len(y_left), len(y_right), ratio * 100)
+    title += "Points left: %d, Points right: %d, DoC: %.1f%%" % (
+        len(y_left),
+        len(y_right),
+        ratio * 100,
+    )
 
     plt.title(title)
 

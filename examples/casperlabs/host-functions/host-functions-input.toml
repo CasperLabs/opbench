@@ -1,14 +1,149 @@
+# Instrumentation details here: CasperLabs/execution-engine/engine-core/src/runtime/externals.rs
+
 [config]
 data_dir = "bench1"
 plot_output_dir = "out"
+model_output_dir = "model"
 degree_of_confidence = 0.99
 row_limit = 10000
 csv_output_path = "host-functions-results.csv"
+fee_schedule_path = "host-functions-fee-schedule.md"
 log_path = "log.txt"
+sort_output = true
+
+
+# Two argument operations
+
+[[operation]]
+name = "ret"
+type = "linear_two_arg"
+arg_descriptions = ["value_size", "uref_count"]
+arg_units = ["byte", "-"]
 
 
 [[operation]]
+name = "store_function_at_hash"
+type = "linear_two_arg"
+arg_descriptions = ["name_size", "contract_size"]
+arg_units = ["byte", "byte"]
+
+
+[[operation]]
+name = "upgrade_contract_at_uref"
+type = "linear_two_arg"
+arg_descriptions = ["name_size", "max(old_contract_size, new_contract_size)"]
+arg_units = ["byte", "byte"]
+used_arg_indices = [0, 1]
+
+
+[[operation]]
+name = "write_local"
+type = "linear_two_arg"
+arg_descriptions = ["key_bytes_size", "value_size"]
+arg_units = ["byte", "byte"]
+
+# Linear operations
+
+[[operation]]
+name = "add_local"
+type = "linear"
+arg_descriptions = ["key_size"]
+arg_units = ["byte"]
+
+
+[[operation]]
+name = "call_contract"
+type = "linear"
+arg_descriptions = ["args_size"]
+arg_units = ["byte"]
+
+
+[[operation]]
+name = "get_key"
+type = "linear"
+arg_descriptions = ["name_size"]
+arg_units = ["byte"]
+
+
+[[operation]]
+name = "has_key"
+type = "linear"
+arg_descriptions = ["name_size"]
+arg_units = ["byte"]
+
+
+[[operation]]
+name = "load_named_keys"
+type = "linear"
+arg_descriptions = ["total_keys"]
+arg_units = ["byte"]
+
+
+[[operation]]
+name = "new_uref"
+type = "linear"
+arg_descriptions = ["value_size"]
+arg_units = ["byte"]
+
+
+[[operation]]
+name = "print"
+type = "linear"
+arg_descriptions = ["text_size"]
+arg_units = ["byte"]
+
+
+[[operation]]
+name = "put_key"
+type = "linear"
+arg_descriptions = ["name_size"]
+arg_units = ["byte"]
+
+
+[[operation]]
+name = "read_host_buffer"
+type = "linear"
+arg_descriptions = ["dest_size"]
+arg_units = ["byte"]
+
+
+[[operation]]
+name = "read_value_local"
+type = "linear"
+arg_descriptions = ["key_size"]
+arg_units = ["byte"]
+
+
+[[operation]]
+name = "remove_key"
+type = "linear"
+arg_descriptions = ["name_size"]
+arg_units = ["byte"]
+
+
+[[operation]]
+name = "write"
+type = "linear"
+arg_descriptions = ["value_size"]
+arg_units = ["byte"]
+
+
+[[operation]]
+name = "get_arg"
+type = "linear"
+arg_descriptions = ["dest_size"]
+arg_units = ["byte"]
+
+
+#Constant operations
+
+[[operation]]
 name = "add"
+type = "constant"
+
+
+[[operation]]
+name = "add_associated_key"
 type = "constant"
 
 
@@ -96,103 +231,3 @@ type = "constant"
 name = "update_associated_key"
 type = "constant"
 
-
-# Linear operations
-
-[[operation]]
-name = "add_local"
-type = "linear"
-arg_descriptions = ["Placeholder"]
-arg_units = ["Placeholder"]
-
-[[operation]]
-name = "call_contract"
-type = "linear"
-arg_descriptions = ["Placeholder"]
-arg_units = ["Placeholder"]
-
-
-[[operation]]
-name = "get_arg"
-type = "linear"
-used_arg_indices = [0]
-arg_descriptions = ["Placeholder"]
-arg_units = ["Placeholder"]
-
-
-[[operation]]
-name = "get_key"
-type = "linear"
-arg_descriptions = ["Placeholder"]
-arg_units = ["Placeholder"]
-
-
-[[operation]]
-name = "has_key"
-type = "linear"
-arg_descriptions = ["Placeholder"]
-arg_units = ["Placeholder"]
-
-
-[[operation]]
-name = "load_named_keys"
-type = "linear"
-arg_descriptions = ["Placeholder"]
-arg_units = ["Placeholder"]
-
-
-[[operation]]
-name = "new_uref"
-type = "linear"
-arg_descriptions = ["Placeholder"]
-arg_units = ["Placeholder"]
-
-
-[[operation]]
-name = "print"
-type = "linear"
-arg_descriptions = ["Placeholder"]
-arg_units = ["Placeholder"]
-
-
-[[operation]]
-name = "put_key"
-type = "linear"
-arg_descriptions = ["Placeholder"]
-arg_units = ["Placeholder"]
-
-
-[[operation]]
-name = "read_host_buffer"
-type = "linear"
-arg_descriptions = ["Placeholder"]
-arg_units = ["Placeholder"]
-
-
-[[operation]]
-name = "read_value_local"
-arg_descriptions = ["Placeholder"]
-arg_units = ["Placeholder"]
-type = "linear"
-
-
-[[operation]]
-name = "remove_key"
-type = "linear"
-arg_descriptions = ["Placeholder"]
-arg_units = ["Placeholder"]
-
-
-[[operation]]
-name = "ret"
-type = "linear"
-used_arg_indices = [1]
-arg_descriptions = ["Placeholder"]
-arg_units = ["Placeholder"]
-
-
-[[operation]]
-name = "write"
-type = "linear"
-arg_descriptions = ["Placeholder"]
-arg_units = ["Placeholder"]

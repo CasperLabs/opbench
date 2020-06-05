@@ -1,3 +1,4 @@
+import re
 import pandas as pd
 import numpy as np
 
@@ -83,3 +84,11 @@ def round_up(f, n):
         raise Exception("Something went wrong")
 
     return f_
+
+
+def multiple_replace(adict, text):
+    # Create a regular expression from all of the dictionary keys
+    regex = re.compile("|".join(map(re.escape, adict.keys())))
+
+    # For each match, look up the corresponding value in the dictionary
+    return regex.sub(lambda match: adict[match.group(0)], text)

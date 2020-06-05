@@ -1,4 +1,4 @@
-# Benchmarking and analysis of operations on the CasperLabs blockchain
+# Generating the Highway Fee Schedule
 
 This requires that the `opbench` module is installed. If it's not already, follow the instructions on the [main README.md](../../README.md).
 
@@ -13,7 +13,7 @@ CasperLabs uses Parity's [wasmi](https://github.com/paritytech/wasmi/), and the 
 
 Opcode instrumentation has been implemented in [this PR](https://github.com/CasperLabs/wasmi/pull/1).
 
-## Running Analysis
+## Running the Analysis
 
 Most recent benchmarks are covered by the ticket OP-1366. Once you make sure that the result zip file `OP-1366.zip` is in the current directory, run
 
@@ -25,8 +25,8 @@ This will copy over the benchmark data files to their respective directories.
 
 Then, perform the analysis by simply running
 
-``
+```
 bash run-analysis.sh
-``
+```
 
-Once the analysis completes, the final results are copied over to `results/`. Plots and other are not copied over. They can be found in `host-functions/` and `wasm-opcodes/` for debugging purposes.
+Once the analysis completes, the final fee schedules are copied over to `results/`. Plots and other output files are not copied over. They can be found in `host-functions/` and `wasm-opcodes/` for debugging purposes.
