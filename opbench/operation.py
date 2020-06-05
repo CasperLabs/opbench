@@ -307,7 +307,7 @@ class Operation:
         replace_dict = {}
 
         for param, label in zip(self.latest_param, self.get_model_parameter_labels()):
-            replace_dict[label] = '{:_}'.format(round_up(param, n_significant_figures))
+            replace_dict[label] = "{:_}".format(round_up(param, n_significant_figures))
 
         for var, desc in zip(vars_, self.get_model_variable_descriptions()):
             replace_dict[var] = desc

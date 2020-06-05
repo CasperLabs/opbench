@@ -1,3 +1,6 @@
+import logging
+
+
 def write_output_csv(operations, path, sort=True):
     if sort:
         operations = sorted(operations, key=lambda x: x.name)
