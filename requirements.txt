@@ -6,3 +6,4 @@ toml
 pandas
 matplotlib
 setuptools
+sortedcollections

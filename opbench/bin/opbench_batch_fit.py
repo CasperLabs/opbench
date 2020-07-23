@@ -53,6 +53,9 @@ def main():
             op = TYPES[op_dict["type"]]()
             op.set_name(op_dict["name"])
 
+            if "group" in op_dict:
+                op.set_group(op_dict["group"])
+
             if "arg_descriptions" in op_dict:
                 op.set_model_variable_descriptions(op_dict["arg_descriptions"])
 

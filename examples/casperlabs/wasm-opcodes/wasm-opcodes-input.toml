@@ -1,3 +1,6 @@
+# Instructions are grouped according to InstructionType here:
+# https://docs.rs/pwasm-utils/0.12.0/src/pwasm_utils/rules.rs.html
+
 [config]
 # data_dir = "opcode-metrics"
 # data_dir = ["opcode-metrics", "opcode-metrics-alt"]
@@ -15,7 +18,7 @@ sort_output = false
 [[operation]]
 name = "Unreachable"
 type = "constant"
-
+group = "unreachable"
 
 # [[operation]]
 # name = "Nop"
@@ -51,84 +54,100 @@ type = "constant"
 name = "Br"
 type = "constant"
 used_arg_indices = []
+group = "control_flow"
 
 
 [[operation]]
 name = "BrIfEqz"
 type = "constant"
 used_arg_indices = []
+group = "control_flow"
 
 
 [[operation]]
 name = "BrIfNez"
 type = "constant"
 used_arg_indices = []
+group = "control_flow"
 
 
 [[operation]]
 name = "BrTable"
 type = "constant"
+group = "control_flow"
 
 
 [[operation]]
 name = "Return"
 type = "constant"
 used_arg_indices = []
+group = "control_flow"
 
 
 [[operation]]
 name = "Call"
 type = "constant"
+group = "control_flow"
 
 
 [[operation]]
 name = "CallIndirect"
 type = "constant"
+group = "control_flow"
 
 
 [[operation]]
 name = "Drop"
 type = "constant"
+group = "control_flow"
 
 
 [[operation]]
 name = "Select"
 type = "constant"
+group = "control_flow"
 
 
 [[operation]]
 name = "GetLocal"
 type = "constant"
+group = "local"
 
 
 [[operation]]
 name = "SetLocal"
 type = "constant"
+group = "local"
 
 
 [[operation]]
 name = "TeeLocal"
 type = "constant"
+group = "local"
 
 
 [[operation]]
 name = "GetGlobal"
 type = "constant"
+group = "local"
 
 
 [[operation]]
 name = "SetGlobal"
 type = "constant"
+group = "local"
 
 
 [[operation]]
 name = "I32Load"
 type = "constant"
+group = "load"
 
 
 [[operation]]
 name = "I64Load"
 type = "constant"
+group = "load"
 
 
 # [[operation]]
@@ -144,61 +163,73 @@ type = "constant"
 [[operation]]
 name = "I32Load8S"
 type = "constant"
+group = "load"
 
 
 [[operation]]
 name = "I32Load8U"
 type = "constant"
+group = "load"
 
 
 [[operation]]
 name = "I32Load16S"
 type = "constant"
+group = "load"
 
 
 [[operation]]
 name = "I32Load16U"
 type = "constant"
+group = "load"
 
 
 [[operation]]
 name = "I64Load8S"
 type = "constant"
+group = "load"
 
 
 [[operation]]
 name = "I64Load8U"
 type = "constant"
+group = "load"
 
 
 [[operation]]
 name = "I64Load16S"
 type = "constant"
+group = "load"
 
 
 [[operation]]
 name = "I64Load16U"
 type = "constant"
+group = "load"
 
 
 [[operation]]
 name = "I64Load32S"
 type = "constant"
+group = "load"
 
 
 [[operation]]
 name = "I64Load32U"
 type = "constant"
+group = "load"
 
 
 [[operation]]
 name = "I32Store"
 type = "constant"
+group = "store"
 
 
 [[operation]]
 name = "I64Store"
 type = "constant"
+group = "store"
 
 
 # [[operation]]
@@ -214,166 +245,199 @@ type = "constant"
 [[operation]]
 name = "I32Store8"
 type = "constant"
+group = "store"
 
 
 [[operation]]
 name = "I32Store16"
 type = "constant"
+group = "store"
 
 
 [[operation]]
 name = "I64Store8"
 type = "constant"
+group = "store"
 
 
 [[operation]]
 name = "I64Store16"
 type = "constant"
+group = "store"
 
 
 [[operation]]
 name = "I64Store32"
 type = "constant"
+group = "store"
 
 
 [[operation]]
 name = "CurrentMemory"
 type = "constant"
+group = "current_memory"
 
 
 [[operation]]
 name = "GrowMemory"
 type = "constant"
+group = "grow_memory"
 
 
 [[operation]]
 name = "I32Const"
 type = "constant"
+group = "const"
 
 
 [[operation]]
 name = "I64Const"
 type = "constant"
+group = "const"
 
 
 # [[operation]]
 # name = "F32Const"
 # type = "constant"
+# group = "const"
 
 
 # [[operation]]
 # name = "F64Const"
 # type = "constant"
+# group = "const"
 
 
 [[operation]]
 name = "I32Eqz"
 type = "constant"
+group = "integer_comparison"
 
 
 [[operation]]
 name = "I32Eq"
 type = "constant"
+group = "integer_comparison"
 
 
 [[operation]]
 name = "I32Ne"
 type = "constant"
+group = "integer_comparison"
 
 
 [[operation]]
 name = "I32LtS"
 type = "constant"
+group = "integer_comparison"
 
 
 [[operation]]
 name = "I32LtU"
 type = "constant"
+group = "integer_comparison"
 
 
 [[operation]]
 name = "I32GtS"
 type = "constant"
+group = "integer_comparison"
 
 
 [[operation]]
 name = "I32GtU"
 type = "constant"
+group = "integer_comparison"
 
 
 [[operation]]
 name = "I32LeS"
 type = "constant"
+group = "integer_comparison"
 
 
 [[operation]]
 name = "I32LeU"
 type = "constant"
+group = "integer_comparison"
 
 
 [[operation]]
 name = "I32GeS"
 type = "constant"
+group = "integer_comparison"
 
 
 [[operation]]
 name = "I32GeU"
 type = "constant"
+group = "integer_comparison"
 
 
 [[operation]]
 name = "I64Eqz"
 type = "constant"
+group = "integer_comparison"
 
 
 [[operation]]
 name = "I64Eq"
 type = "constant"
+group = "integer_comparison"
 
 
 [[operation]]
 name = "I64Ne"
 type = "constant"
+group = "integer_comparison"
 
 
 [[operation]]
 name = "I64LtS"
 type = "constant"
+group = "integer_comparison"
 
 
 [[operation]]
 name = "I64LtU"
 type = "constant"
+group = "integer_comparison"
 
 
 [[operation]]
 name = "I64GtS"
 type = "constant"
+group = "integer_comparison"
 
 
 [[operation]]
 name = "I64GtU"
 type = "constant"
+group = "integer_comparison"
 
 
 [[operation]]
 name = "I64LeS"
 type = "constant"
+group = "integer_comparison"
 
 
 [[operation]]
 name = "I64LeU"
 type = "constant"
+group = "integer_comparison"
 
 
 [[operation]]
 name = "I64GeS"
 type = "constant"
+group = "integer_comparison"
 
 
 [[operation]]
 name = "I64GeU"
 type = "constant"
+group = "integer_comparison"
 
 
 # [[operation]]
@@ -439,181 +503,217 @@ type = "constant"
 [[operation]]
 name = "I32Clz"
 type = "constant"
+group = "bit"
 
 
 [[operation]]
 name = "I32Ctz"
 type = "constant"
+group = "bit"
 
 
 [[operation]]
 name = "I32Popcnt"
 type = "constant"
+group = "bit"
 
 
 [[operation]]
 name = "I32Add"
 type = "constant"
+group = "add"
 
 
 [[operation]]
 name = "I32Sub"
 type = "constant"
+group = "add"
 
 
 [[operation]]
 name = "I32Mul"
 type = "constant"
+group = "mul"
 
 
 [[operation]]
 name = "I32DivS"
 type = "constant"
+group = "div"
 
 
 [[operation]]
 name = "I32DivU"
 type = "constant"
+group = "div"
 
 
 [[operation]]
 name = "I32RemS"
 type = "constant"
+group = "div"
 
 
 [[operation]]
 name = "I32RemU"
 type = "constant"
+group = "div"
 
 
 [[operation]]
 name = "I32And"
 type = "constant"
+group = "bit"
 
 
 [[operation]]
 name = "I32Or"
 type = "constant"
+group = "bit"
 
 
 [[operation]]
 name = "I32Xor"
 type = "constant"
+group = "bit"
 
 
 [[operation]]
 name = "I32Shl"
 type = "constant"
+group = "bit"
 
 
 [[operation]]
 name = "I32ShrS"
 type = "constant"
+group = "bit"
 
 
 [[operation]]
 name = "I32ShrU"
 type = "constant"
+group = "bit"
 
 
 [[operation]]
 name = "I32Rotl"
 type = "constant"
+group = "bit"
 
 
 [[operation]]
 name = "I32Rotr"
 type = "constant"
+group = "bit"
 
 
 [[operation]]
 name = "I64Clz"
 type = "constant"
+group = "bit"
 
 
 [[operation]]
 name = "I64Ctz"
 type = "constant"
+group = "bit"
 
 
 [[operation]]
 name = "I64Popcnt"
 type = "constant"
+group = "bit"
 
 
 [[operation]]
 name = "I64Add"
 type = "constant"
+group = "add"
 
 
 [[operation]]
 name = "I64Sub"
 type = "constant"
+group = "add"
 
 
 [[operation]]
 name = "I64Mul"
 type = "constant"
+group = "mul"
 
 
 [[operation]]
 name = "I64DivS"
 type = "constant"
+group = "div"
 
 
 [[operation]]
 name = "I64DivU"
 type = "constant"
+group = "div"
 
 
 [[operation]]
 name = "I64RemS"
 type = "constant"
+group = "div"
 
 
 [[operation]]
 name = "I64RemU"
 type = "constant"
+group = "div"
 
 
 [[operation]]
 name = "I64And"
 type = "constant"
+group = "bit"
 
 
 [[operation]]
 name = "I64Or"
 type = "constant"
+group = "bit"
 
 
 [[operation]]
 name = "I64Xor"
 type = "constant"
+group = "bit"
 
 
 [[operation]]
 name = "I64Shl"
 type = "constant"
+group = "bit"
 
 
 [[operation]]
 name = "I64ShrS"
 type = "constant"
+group = "bit"
 
 
 [[operation]]
 name = "I64ShrU"
 type = "constant"
+group = "bit"
 
 
 [[operation]]
 name = "I64Rotl"
 type = "constant"
+group = "bit"
 
 
 [[operation]]
 name = "I64Rotr"
 type = "constant"
+group = "bit"
 
 
 # [[operation]]
@@ -759,6 +859,7 @@ type = "constant"
 [[operation]]
 name = "I32WrapI64"
 type = "constant"
+group = "conversion"
 
 
 # [[operation]]
@@ -784,11 +885,13 @@ type = "constant"
 [[operation]]
 name = "I64ExtendSI32"
 type = "constant"
+group = "conversion"
 
 
 [[operation]]
 name = "I64ExtendUI32"
 type = "constant"
+group = "conversion"
 
 
 # [[operation]]

@@ -1,4 +1,4 @@
-# Generating the Highway Fee Schedule
+# Generating CasperLabs Fee Schedule
 
 This requires that the `opbench` module is installed. If it's not already, follow the instructions on the [main README.md](../../README.md).
 

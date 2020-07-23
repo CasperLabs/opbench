@@ -20,6 +20,7 @@ class Operation:
         self.model_variable_descriptions = None
         self.model_variable_units = None
         self.name = None
+        self.group = None
 
         self.latest_param = None
 
@@ -50,6 +51,9 @@ class Operation:
 
     def set_name(self, name):
         self.name = name
+
+    def set_group(self, group):
+        self.group = group
 
     def set_model_definition(self, model_definition):
         self.model_definition = model_definition
